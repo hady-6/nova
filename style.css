@@ -370,3 +370,17 @@ a.badge.novareset { display: inline-flex; align-items: center; gap: 5px; text-de
 a.badge.novareset .novareset-t { font-weight: 800; font-size: 11px; letter-spacing: .12em; direction: ltr; }
 a.badge.novareset:hover { filter: brightness(1.15); }
 a.badge.novareset:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
+
+/* FAQ accordion cards with chevron button */
+details { padding: 0; overflow: hidden; }
+summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 14px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: ""; flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--line); background: rgba(124,92,255,.12) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%238fd8ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>') center/13px no-repeat; transition: transform .18s ease, border-color .18s ease; }
+details[open] summary::after { transform: rotate(180deg); border-color: #7c5cff; }
+details[open] { border-color: rgba(124,92,255,.55); }
+details p { padding: 0 14px 13px; margin: 0; }
+
+/* planned platforms row */
+.plat-plan { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; color: var(--ink-2); }
+.plat-plan .ptile { width: 30px; height: 30px; border-radius: 9px; font-size: 10px; }
+.ptile.yt { background: #ff0033; }
