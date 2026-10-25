@@ -634,6 +634,9 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
   .about-mock { margin-top: 0; }
 }
 @media (max-width: 420px) {
+  .about .about-txt { text-align: center; }
+  .panel.low.about h2 { text-align: center; }
+  .about .pill-mini { display: inline-block; }
   .float-ic { width: 42px; height: 42px; border-radius: 12px; }
   .fi-link { right: max(6px, calc(50% - 158px)); }
   .fi-vid { left: max(6px, calc(50% - 168px)); top: 86px; }
