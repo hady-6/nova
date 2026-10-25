@@ -11,10 +11,10 @@
   --err: #ff9daa;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--ink);
   font-family: system-ui, 'Segoe UI', Tahoma, sans-serif;
   line-height: 1.8;
@@ -560,9 +560,9 @@ footer .advice { font-size: .8rem; opacity: .75; }
   box-shadow: 0 10px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center;
   animation: float-y 4s ease-in-out infinite;
 }
-.fi-link { top: 40px; right: calc(50% - 175px); background: #3b82f6; }
-.fi-vid { top: 96px; left: calc(50% - 185px); background: #f59e0b; }
-.fi-dl { bottom: 34px; left: calc(50% - 172px);  background: #10b981; }
+.fi-link { top: 40px; right: max(8px, calc(50% - 175px)); background: #3b82f6; }
+.fi-vid { top: 96px; left: max(8px, calc(50% - 185px)); background: #f59e0b; }
+.fi-dl { bottom: 34px; left: max(8px, calc(50% - 172px));  background: #10b981; }
 
 /* Steps: open cards, ref dims */
 .how-sec .steps { gap: 22px; }
@@ -644,7 +644,7 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
 }
 @media (max-width: 420px) {
   .float-ic { width: 42px; height: 42px; border-radius: 12px; }
-  .fi-link { right: calc(50% - 158px); }
-  .fi-vid { left: calc(50% - 168px); top: 86px; }
+  .fi-link { right: max(6px, calc(50% - 158px)); }
+  .fi-vid { left: max(6px, calc(50% - 168px)); top: 86px; }
   .fi-dl { left: calc(50% - 155px); }
 }
