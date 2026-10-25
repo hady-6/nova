@@ -562,7 +562,7 @@ footer .advice { font-size: .8rem; opacity: .75; }
 }
 .fi-link { top: 40px; right: max(8px, calc(50% - 175px)); }
 .fi-vid { top: 100px; left: max(8px, calc(50% - 185px)); }
-.fi-dl { bottom: 26px; left: max(8px, calc(50% - 195px)); }
+.fi-dl { bottom: 22px; left: max(-22px, calc(50% - 185px)); }
 
 /* Steps: open cards, ref dims */
 .how-sec .steps { gap: 22px; }
