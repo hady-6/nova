@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hady-6.github.io/nova/sitemap.xml
