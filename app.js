@@ -20,7 +20,7 @@ const I18N = {
     ok_t: 'اتحمّل ✓', ok_b: 'الفيديو نزل على جهازك.',
     about_h: 'نوفا - أداة مجانية لتنزيل الفيديو عبر الإنترنت لعام 2026',
     mock_dl: 'تنزيل',
-    mock_cancel: 'إلغاء',
+    mock_cancel: 'إلغاء', mock_demo: 'معاينة',
     about_chip: 'جودة أصلية',
     about_p1: 'نوفا أداة مجانية عبر الإنترنت تتيح لك تنزيل فيديوهات بنترست والفيديوهات من الروابط المباشرة بصيغتها الأصلية خلال بضع نقرات فقط.',
     about_p2: 'عند لصق الرابط، يقوم نوفا بعرض خيارات الجودة المتاحة في المصدر لتختار الأنسب، ويتم التحميل على جهازك مباشرة بلا حساب ولا خطوات غير ضرورية.',
@@ -97,7 +97,7 @@ const I18N = {
     ok_t: 'Downloaded ✓', ok_b: 'The video is on your device.',
     about_h: 'NOVA - a free online video downloader for 2026',
     mock_dl: 'Download',
-    mock_cancel: 'Cancel',
+    mock_cancel: 'Cancel', mock_demo: 'Preview',
     about_chip: 'Original quality',
     about_p1: 'NOVA is a free online tool that lets you download Pinterest videos and videos from direct links in their original format in just a few clicks.',
     about_p2: 'Paste a link and NOVA shows the quality options available at the source so you can pick the best one. Downloads happen on your device - no account, no unnecessary steps.',
@@ -400,4 +400,29 @@ document.querySelectorAll('details').forEach(function(d){
   d.addEventListener('toggle', function(){
     if (d.open) document.querySelectorAll('details[open]').forEach(function(o){ if (o !== d) o.open = false; });
   });
+});
+
+/* About mockup: demo progress animation up to 96% (visual preview only) */
+document.addEventListener('DOMContentLoaded', function () {
+  var pct = document.querySelector('.mock-pct');
+  var bar = document.querySelector('.mock-bar span');
+  if (!pct || !bar) return;
+  var START = 8, END = 96, DUR = 4200, HOLD = 2500;
+  var t0 = null;
+  function frame(ts) {
+    if (t0 === null) t0 = ts;
+    var t = (ts - t0) / DUR;
+    if (t <= 1) {
+      var e = 1 - Math.pow(1 - t, 3);
+      var v = Math.round(START + (END - START) * e);
+      pct.textContent = v + '%';
+      bar.style.width = v + '%';
+      requestAnimationFrame(frame);
+    } else {
+      pct.textContent = END + '%';
+      bar.style.width = END + '%';
+      setTimeout(function () { t0 = null; requestAnimationFrame(frame); }, HOLD);
+    }
+  }
+  requestAnimationFrame(frame);
 });
