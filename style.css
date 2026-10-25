@@ -446,3 +446,9 @@ section.panel:has(.ptiles)::after {
   font-size: 4.5rem; font-weight: 900; line-height: 1;
   color: rgba(255,255,255,.05); pointer-events: none; z-index: 0;
 }
+
+/* compact apology note + smaller footer advice (user: خلي بس دي والنصيحة بس صغرهم) */
+.panel.mini { padding: 14px 18px; }
+.panel.mini .mini-t { font-weight: 700; font-size: .95rem; margin: 0 0 4px; }
+.panel.mini .mini-b { font-size: .82rem; opacity: .75; margin: 0; line-height: 1.6; }
+footer .advice { font-size: .78rem; opacity: .7; }
