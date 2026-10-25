@@ -483,3 +483,153 @@ footer .advice { font-size: .8rem; opacity: .75; }
   details p { font-size: .95rem; }
   section.panel { margin-top: 6px; }
 }
+
+
+/* ===== v25: lower page reference composition (open unboxed sections, dot matrix, generous whitespace, ref dims, NOVA galaxy identity) ===== */
+.panel.low {
+  background: none; border: 0; box-shadow: none;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-radius: 0; margin-top: 0; padding: 60px 0;
+  background-image: radial-gradient(rgba(148,163,255,.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.panel.low h2 {
+  font-size: clamp(1.55rem, 4.5vw, 2.05rem); font-weight: 800;
+  justify-content: center; text-align: center; margin: 0 0 42px; color: #eef0ff;
+}
+@keyframes blob-morph {
+  0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  100% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+}
+@keyframes pulse-glow { 0% { transform: scale(.9); opacity: .7; } 100% { transform: scale(1.1); opacity: 1; } }
+
+/* About: open split, premium chip, gradient title, large body */
+.about h2 {
+  justify-content: flex-start; text-align: start; margin: 0 0 22px; line-height: 1.35;
+  background: linear-gradient(135deg, #eef0ff 30%, #a78bfa 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.about .pill-mini {
+  display: inline-block; background: rgba(99,102,241,.16); color: #a5b4fc;
+  border: 1px solid rgba(99,102,241,.35); padding: 7px 18px; border-radius: 999px;
+  font-weight: 700; font-size: .85rem; margin-bottom: 20px;
+}
+.about p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 18px; }
+
+/* About mockup: reference glass card with video preview + floating badges */
+.about-mock { position: relative; margin-top: 34px; display: flex; justify-content: center; }
+.mock-blob {
+  position: absolute; width: 380px; height: 380px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,92,255,.22) 0%, transparent 70%);
+  animation: pulse-glow 4s infinite alternate;
+}
+.about-mock .mock-card {
+  width: 320px; max-width: 100%; padding: 24px; border-radius: 24px;
+  background: rgba(20,24,55,.78); border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px -10px rgba(0,0,0,.5); position: relative; z-index: 2;
+}
+.mock-video {
+  width: 100%; height: 160px; border-radius: 16px; margin-bottom: 20px;
+  background: linear-gradient(135deg, #232a56, #2c2f6b);
+  display: flex; align-items: center; justify-content: center;
+}
+.mock-play {
+  width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.96);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+.about-mock .mock-file { color: #cbd3ff; font-weight: 700; font-size: .85rem; }
+.mock-btns { justify-content: stretch; }
+.about-mock .mock-cancel, .about-mock .mock-dl {
+  flex: 1; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 600; padding: 0;
+}
+.about-mock .mock-cancel { background: rgba(255,255,255,.08); border: 0; color: #94a3c7; opacity: 1; }
+.about-mock .mock-dl { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
+.float-ic {
+  position: absolute; width: 50px; height: 50px; z-index: 3;
+  background: rgba(24,28,60,.92); border: 1px solid rgba(255,255,255,.16); border-radius: 14px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center;
+  animation: float-y 4s ease-in-out infinite;
+}
+.fi-pin { top: 26px; right: calc(50% - 175px); color: #ff4d6d; font-weight: 800; font-size: 1.3rem; }
+.fi-dl { bottom: 34px; left: calc(50% - 172px); }
+
+/* Steps: open cards, ref dims */
+.how-sec .steps { gap: 22px; }
+.how-sec .step {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
+  border-radius: 24px; padding: 30px 24px;
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+}
+.how-sec .step:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -5px rgba(0,0,0,.4); }
+.how-sec .step .tile { width: 60px; height: 60px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 10px 20px -5px rgba(0,0,0,.4); }
+.how-sec .step strong { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+.how-sec .step p { font-size: .9rem; line-height: 1.7; }
+
+/* Why: adv-cards with morphing blob icons */
+.why-sec .feat { gap: 22px; }
+.why-sec .cell {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
+  border-radius: 24px; padding: 30px 24px; position: relative; overflow: hidden;
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+}
+.why-sec .cell::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  background: linear-gradient(90deg, #38bdf8, #a78bfa); opacity: 0; transition: opacity .3s;
+}
+.why-sec .cell:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,.45); }
+.why-sec .cell:hover::before { opacity: 1; }
+.why-sec .bubble {
+  width: 70px; height: 70px; margin-bottom: 20px;
+  background: rgba(124,92,255,.13);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  display: flex; align-items: center; justify-content: center;
+  animation: blob-morph 6s infinite alternate;
+}
+.why-sec .bubble svg { width: 30px; height: 30px; }
+.why-sec .cell strong { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; }
+.why-sec .cell p { font-size: .9rem; line-height: 1.7; }
+
+/* FAQ: individual open cards */
+.faq-sec { padding-bottom: 90px; }
+.faq-sec details {
+  background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px; margin-top: 0;
+}
+.faq-sec details + details { margin-top: 16px; }
+.faq-sec details:hover { box-shadow: 0 4px 15px -3px rgba(0,0,0,.3); border-color: rgba(255,255,255,.18); }
+.faq-sec summary { padding: 20px 24px; font-weight: 600; font-size: 1.05rem; }
+.faq-sec summary::after { width: 28px; height: 28px; }
+.faq-sec details[open] summary { color: #a78bff; }
+.faq-sec details[open] { border-color: rgba(124,92,255,.55); }
+.faq-sec details p { padding: 0 24px 22px; font-size: .95rem; line-height: 1.75; }
+
+/* Footer: reference composition, NOVA identity, real destinations only */
+footer {
+  border-top: 1px solid rgba(255,255,255,.08); margin-top: 10px; padding: 44px 4px 30px;
+}
+.foot-brand { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 14px;
+  background: linear-gradient(135deg, #eef0ff 30%, #a78bfa 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0 0 22px; }
+.foot-links { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
+.foot-links a { color: var(--ink-2); text-decoration: none; font-size: .92rem; }
+.foot-links a:hover { color: #a78bff; }
+.foot-gh {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.16);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #cbd3ff; font-weight: 800; font-size: .75rem; transition: all .3s;
+}
+.foot-gh:hover { border-color: #a78bff; color: #a78bff; transform: translateY(-3px); }
+
+@media (min-width: 700px) {
+  .panel.low { padding: 80px 0; }
+  .about-mock { margin-top: 0; }
+}
+@media (max-width: 420px) {
+  .float-ic { width: 42px; height: 42px; border-radius: 12px; }
+  .fi-pin { right: calc(50% - 158px); }
+  .fi-dl { left: calc(50% - 155px); }
+}
