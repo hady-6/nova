@@ -436,3 +436,13 @@ section.panel:has(.ptiles)::after {
 .ptile2 { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 20px 14px; transition: transform .3s cubic-bezier(.34,1.56,.64,1), border-color .3s ease; }
 .ptile2:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.35); }
 .ptile.big2 { width: 60px; height: 60px; border-radius: 16px; }
+
+/* step watermark numerals (ref: 5rem/900 faint, top-corner) */
+.steps { counter-reset: stepnum; }
+.step { position: relative; overflow: hidden; counter-increment: stepnum; }
+.step::before {
+  content: counter(stepnum, decimal-leading-zero);
+  position: absolute; top: -8px; inset-inline-end: 4px;
+  font-size: 4.5rem; font-weight: 900; line-height: 1;
+  color: rgba(255,255,255,.05); pointer-events: none; z-index: 0;
+}
