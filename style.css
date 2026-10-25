@@ -203,6 +203,7 @@ footer {
 .lang {
   width: auto; padding: 7px 14px; font-size: 13.5px; font-weight: 700;
   border-radius: 999px; background: var(--glass); border: 1px solid var(--line); color: var(--ink);
+  cursor: pointer; font-family: inherit;
 }
 .lang:hover { border-color: var(--cyan); }
 .pill {
