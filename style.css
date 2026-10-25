@@ -504,7 +504,7 @@ footer .advice { font-size: .8rem; opacity: .75; }
 @keyframes pulse-glow { 0% { transform: scale(.9); opacity: .7; } 100% { transform: scale(1.1); opacity: 1; } }
 
 /* About: open split, premium chip, gradient title, large body */
-.about h2 {
+.panel.low.about h2 {
   justify-content: flex-start; text-align: start; margin: 0 0 22px; line-height: 1.35;
   background: linear-gradient(135deg, #eef0ff 30%, #a78bfa 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
@@ -568,29 +568,35 @@ footer .advice { font-size: .8rem; opacity: .75; }
 .how-sec .step strong { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
 .how-sec .step p { font-size: .9rem; line-height: 1.7; }
 
-/* Why: adv-cards with morphing blob icons */
-.why-sec .feat { gap: 22px; }
+/* Why: adv-cards with morphing blob icons, reference palette */
+.why-sec .feat { gap: 24px; }
 .why-sec .cell {
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
+  --cc: #38bdf8;
+  background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.05);
   border-radius: 24px; padding: 30px 24px; position: relative; overflow: hidden;
-  transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease, background .3s ease;
 }
 .why-sec .cell::before {
   content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-  background: linear-gradient(90deg, #38bdf8, #a78bfa); opacity: 0; transition: opacity .3s;
+  background: var(--cc); opacity: 0; transition: opacity .3s;
 }
-.why-sec .cell:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,.45); }
+.why-sec .cell:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,.45); background: rgba(255,255,255,.07); }
 .why-sec .cell:hover::before { opacity: 1; }
+.why-sec .cell.cm { --cc: #34d399; }
+.why-sec .cell.ca { --cc: #fbbf24; }
+.why-sec .cell.cl { --cc: #818cf8; }
+.why-sec .cell.cr { --cc: #f9a8d4; }
 .why-sec .bubble {
   width: 70px; height: 70px; margin-bottom: 20px;
-  background: rgba(124,92,255,.13);
+  background: color-mix(in srgb, var(--cc) 16%, transparent);
+  color: var(--cc);
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   display: flex; align-items: center; justify-content: center;
   animation: blob-morph 6s infinite alternate;
 }
 .why-sec .bubble svg { width: 30px; height: 30px; }
-.why-sec .cell strong { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; }
-.why-sec .cell p { font-size: .9rem; line-height: 1.7; }
+.why-sec .cell strong { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; }
+.why-sec .cell p { font-size: .9rem; line-height: 1.6; }
 
 /* FAQ: individual open cards */
 .faq-sec { padding-bottom: 90px; }
