@@ -364,3 +364,9 @@ html.light .lang-menu button[aria-selected="true"] { color: #5b4bd6; }
 .plink:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
 /* icon row reads LTR so Pinterest sits at the visual left in every language */
 .picons { direction: ltr; }
+
+/* NOVA logo pill: tap reloads the page */
+a.badge.novareset { display: inline-flex; align-items: center; gap: 5px; text-decoration: none; color: inherit; cursor: pointer; }
+a.badge.novareset .novareset-t { font-weight: 800; font-size: 11px; letter-spacing: .12em; direction: ltr; }
+a.badge.novareset:hover { filter: brightness(1.15); }
+a.badge.novareset:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
