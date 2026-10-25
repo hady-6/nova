@@ -144,8 +144,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
   document.querySelectorAll('[data-i18n-title]').forEach((el) => { el.title = t(el.dataset.i18nTitle); el.setAttribute('aria-label', el.title); });
-  const sel = $('lang-select');
-  if (sel && sel.value !== lang) sel.value = lang;
+  if (window.__syncLangUI) window.__syncLangUI();
   if (localStorage.getItem('nova-rating')) $('rate-note').textContent = t('rate_saved');
   document.title = 'N O V A — ' + t('h1');
 }
@@ -153,19 +152,37 @@ function applyLang() {
 const LANGS = ['ar', 'en', 'fr', 'es', 'ru', 'zh'];
 const LANG_NAMES = { ar: 'عربي', en: 'English', fr: 'Français', es: 'Español', ru: 'Русский', zh: '中文' };
 (function initLangSelect() {
-  const sel = $('lang-select');
+  const btn = $('lang-btn'), menu = $('lang-menu'), cur = $('lang-current');
+  if (!btn || !menu) return;
   LANGS.forEach((code) => {
-    const o = document.createElement('option');
-    o.value = code;
-    o.textContent = LANG_NAMES[code];
-    sel.appendChild(o);
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'option');
+    b.dataset.lang = code;
+    b.textContent = LANG_NAMES[code];
+    b.addEventListener('click', () => {
+      lang = code;
+      localStorage.setItem('nova-lang', lang);
+      applyLang();
+      closeMenu();
+    });
+    menu.appendChild(b);
   });
-  sel.value = lang;
-  sel.addEventListener('change', () => {
-    lang = sel.value;
-    localStorage.setItem('nova-lang', lang);
-    applyLang();
+  function syncUI() {
+    cur.textContent = LANG_NAMES[lang];
+    menu.querySelectorAll('button').forEach((b) =>
+      b.setAttribute('aria-selected', b.dataset.lang === lang ? 'true' : 'false'));
+  }
+  let open = false;
+  function openMenu() { open = true; menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); }
+  function closeMenu() { open = false; menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); open ? closeMenu() : openMenu(); });
+  document.addEventListener('click', (e) => {
+    if (open && !menu.contains(e.target) && !btn.contains(e.target)) closeMenu();
   });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) closeMenu(); });
+  window.__syncLangUI = syncUI;
+  syncUI();
 })();
 
 
