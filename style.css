@@ -362,6 +362,5 @@ html.light .lang-menu button[aria-selected="true"] { color: #5b4bd6; }
 .plink { display: inline-flex; border-radius: 7px; transition: transform .15s ease, filter .15s ease; }
 .plink:hover { transform: translateY(-1px); filter: brightness(1.12); }
 .plink:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
-.ptile.soon-tile { opacity: 1; }
 /* icon row reads LTR so Pinterest sits at the visual left in every language */
 .picons { direction: ltr; }
