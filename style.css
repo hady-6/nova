@@ -443,6 +443,13 @@ section.panel:has(.ptiles)::after {
 .about-mock { display: flex; justify-content: center; margin-top: 14px; }
 .mock-card { width: 100%; max-width: 300px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 16px; }
 .mock-row { display: flex; justify-content: space-between; font-size: .85rem; margin-bottom: 10px; }
+.mock-demo {
+  position: absolute; top: 10px; inset-inline-start: 12px; z-index: 2;
+  background: rgba(124,92,255,.18); border: 1px solid rgba(167,139,250,.4);
+  color: #c4b5fd; font-size: .68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px;
+}
+.mock-card { position: relative; }
 .mock-pct { color: #7dd8ff; font-weight: 700; }
 .mock-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.1); overflow: hidden; margin-bottom: 12px; }
 .mock-bar span { display: block; height: 100%; width: 85%; border-radius: 99px; background: linear-gradient(90deg, #38bdf8, #a78bfa); }
@@ -553,7 +560,8 @@ footer .advice { font-size: .8rem; opacity: .75; }
   box-shadow: 0 10px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center;
   animation: float-y 4s ease-in-out infinite;
 }
-.fi-pin { top: 26px; right: calc(50% - 175px); color: #ff4d6d; font-weight: 800; font-size: 1.3rem; }
+.fi-pin { top: 40px; right: calc(50% - 175px); color: #ff4d6d; font-weight: 800; font-size: 1.3rem; }
+.fi-vid { top: 96px; left: calc(50% - 185px); }
 .fi-dl { bottom: 34px; left: calc(50% - 172px); }
 
 /* Steps: open cards, ref dims */
@@ -637,5 +645,6 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
 @media (max-width: 420px) {
   .float-ic { width: 42px; height: 42px; border-radius: 12px; }
   .fi-pin { right: calc(50% - 158px); }
+  .fi-vid { left: calc(50% - 168px); top: 86px; }
   .fi-dl { left: calc(50% - 155px); }
 }
