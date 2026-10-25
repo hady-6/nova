@@ -385,3 +385,54 @@ details p { padding: 0 14px 13px; margin: 0; }
 .plat-plan { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; color: var(--ink-2); }
 .plat-plan .ptile { width: 30px; height: 30px; border-radius: 9px; font-size: 10px; }
 .ptile.yt { background: #ff0033; }
+
+/* ---- reference fidelity pass (ssyt.rip measured values, NOVA dark adaptation) ---- */
+.panel { border-radius: 24px; padding: 30px 24px; }
+h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; }
+
+/* steps: stacked card like ref step-card-pro (radius 24, pad 30/24, tile 60/16, hover lift) */
+.steps { gap: 16px; }
+.step { display: block; border-radius: 24px; padding: 24px 20px; transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease; }
+.step:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -5px rgba(0,0,0,.35); }
+.step .tile { width: 60px; height: 60px; border-radius: 16px; margin-bottom: 14px; transition: transform .4s ease; }
+.step:hover .tile { transform: scale(1.1) rotate(-3deg); }
+.step strong { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: .9rem; line-height: 1.6; }
+
+/* advantage cards: radius 24, pad 30/24, tinted square icon, hover lift */
+.feat { gap: 16px; }
+.feat .cell { border-radius: 24px; padding: 24px 20px; transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease; }
+.feat .cell:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -5px rgba(0,0,0,.35); }
+.feat .cell strong { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
+.feat .cell p { font-size: .9rem; line-height: 1.6; }
+.bubble { width: 56px; height: 56px; border-radius: 16px; margin-bottom: 12px; }
+.bubble svg { width: 24px; height: 24px; }
+
+/* FAQ: ref item radius 16, header 20/24, title 1.05/600, 28px circle toggle, open=violet */
+details { border-radius: 16px; margin-top: 12px; transition: border-color .3s ease, box-shadow .3s ease; }
+details:hover { box-shadow: 0 4px 15px -3px rgba(0,0,0,.25); }
+summary { padding: 20px 24px; font-weight: 600; font-size: 1.05rem; transition: color .3s ease; }
+summary::after { width: 28px; height: 28px; transition: transform .3s cubic-bezier(.4,0,.2,1), border-color .3s ease, background-color .3s ease; }
+details[open] summary { color: #a78bff; }
+details p { padding: 0 24px 20px; font-size: .95rem; line-height: 1.7; }
+
+/* platforms: dark island panel (ref #0f172a->#1e1b4b, radius 30, pad 32/28, floating glass tiles) */
+section.panel:has(.ptiles) {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 30px; padding: 32px 28px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(30,27,75,.45);
+}
+section.panel:has(.ptiles)::after {
+  content: ""; position: absolute; width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(99,102,241,.28) 0%, transparent 70%);
+  top: -100px; inset-inline-end: -50px; filter: blur(50px); pointer-events: none;
+  animation: pulse-glow 5s infinite alternate;
+}
+@keyframes pulse-glow { from { opacity: .5; } to { opacity: 1; } }
+.ptiles { animation: float-island 6s ease-in-out infinite; position: relative; z-index: 1; }
+@keyframes float-island { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.ptile2 { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 20px 14px; transition: transform .3s cubic-bezier(.34,1.56,.64,1), border-color .3s ease; }
+.ptile2:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.35); }
+.ptile.big2 { width: 60px; height: 60px; border-radius: 16px; }
