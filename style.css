@@ -14,6 +14,7 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  overflow-x: hidden;
   color: var(--ink);
   font-family: system-ui, 'Segoe UI', Tahoma, sans-serif;
   line-height: 1.8;
@@ -337,7 +338,8 @@ html.light .stars, html.light .stars2 { opacity: .14; }
 .lang .chev { opacity: .7; transition: transform .18s ease; }
 .lang[aria-expanded="true"] .chev { transform: rotate(180deg); }
 .lang-menu {
-  position: absolute; top: calc(100% + 8px); inset-inline-start: 0; z-index: 40;
+  position: absolute; top: calc(100% + 8px); inset-inline-end: 0; z-index: 40;
+  max-width: calc(100vw - 32px);
   min-width: 172px; padding: 6px; margin: 0;
   background: rgba(17, 21, 48, .94); border: 1px solid var(--line); border-radius: 14px;
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
