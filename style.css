@@ -556,13 +556,13 @@ footer .advice { font-size: .8rem; opacity: .75; }
 .about-mock .mock-dl { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
 .float-ic {
   position: absolute; width: 50px; height: 50px; z-index: 3;
-  background: rgba(24,28,60,.92); border: 1px solid rgba(255,255,255,.16); border-radius: 14px;
+  border-radius: 14px; border: 0;
   box-shadow: 0 10px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center;
   animation: float-y 4s ease-in-out infinite;
 }
-.fi-pin { top: 40px; right: calc(50% - 175px); color: #ff4d6d; font-weight: 800; font-size: 1.3rem; }
-.fi-vid { top: 96px; left: calc(50% - 185px); }
-.fi-dl { bottom: 34px; left: calc(50% - 172px); }
+.fi-link { top: 40px; right: calc(50% - 175px); background: #3b82f6; }
+.fi-vid { top: 96px; left: calc(50% - 185px); background: #f59e0b; }
+.fi-dl { bottom: 34px; left: calc(50% - 172px);  background: #10b981; }
 
 /* Steps: open cards, ref dims */
 .how-sec .steps { gap: 22px; }
@@ -644,7 +644,7 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
 }
 @media (max-width: 420px) {
   .float-ic { width: 42px; height: 42px; border-radius: 12px; }
-  .fi-pin { right: calc(50% - 158px); }
+  .fi-link { right: calc(50% - 158px); }
   .fi-vid { left: calc(50% - 168px); top: 86px; }
   .fi-dl { left: calc(50% - 155px); }
 }
