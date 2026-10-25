@@ -556,13 +556,13 @@ footer .advice { font-size: .8rem; opacity: .75; }
 .about-mock .mock-dl { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
 .float-ic {
   position: absolute; width: 50px; height: 50px; z-index: 3;
-  border-radius: 14px; border: 0;
-  box-shadow: 0 10px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center;
+  background: #fff; border: 1px solid rgba(13,18,51,.06); border-radius: 14px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.18); display: flex; align-items: center; justify-content: center;
   animation: float-y 4s ease-in-out infinite;
 }
-.fi-link { top: 40px; right: max(8px, calc(50% - 175px)); background: #3b82f6; }
-.fi-vid { top: 96px; left: max(8px, calc(50% - 185px)); background: #f59e0b; }
-.fi-dl { bottom: 34px; left: max(8px, calc(50% - 172px));  background: #10b981; }
+.fi-link { top: 40px; right: max(8px, calc(50% - 175px)); }
+.fi-vid { top: 100px; left: max(8px, calc(50% - 185px)); }
+.fi-dl { bottom: 60px; left: max(8px, calc(50% - 175px)); }
 
 /* Steps: open cards, ref dims */
 .how-sec .steps { gap: 22px; }
