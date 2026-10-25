@@ -473,3 +473,21 @@ footer .advice { font-size: .8rem; opacity: .75; }
 @media (min-width: 700px) and (max-width: 899px) {
   .card { max-width: 740px; }
 }
+
+/* ===== v21: desktop proportions (نسبة وتناسب) ===== */
+@media (min-width: 900px) {
+  h1 { font-size: 2.4rem; }
+  .tag, header .intro { font-size: 1.05rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 18px; }
+  #go-panel { max-width: none; }
+  #go-panel input#url { font-size: 1.05rem; padding: 16px 18px; }
+  #go-panel .primary.big { font-size: 1.15rem; padding: 16px; }
+  .chips { gap: 12px; margin-top: 18px; }
+  .chip { font-size: .95rem; padding: 8px 16px; }
+  .about-mock .mock-card { max-width: 340px; padding: 20px; }
+  .step p, .feat .cell p, .plat-sub { font-size: .95rem; }
+  .ptile2 p { font-size: .92rem; }
+  details summary { font-size: 1.1rem; }
+  details p { font-size: .95rem; }
+  section.panel { margin-top: 6px; }
+}
