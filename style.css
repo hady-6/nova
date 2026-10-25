@@ -646,5 +646,5 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
   .float-ic { width: 42px; height: 42px; border-radius: 12px; }
   .fi-link { right: max(6px, calc(50% - 158px)); }
   .fi-vid { left: max(6px, calc(50% - 168px)); top: 86px; }
-  .fi-dl { left: calc(50% - 155px); }
+  .fi-dl { left: -6px; }
 }
