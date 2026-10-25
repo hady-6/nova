@@ -437,18 +437,39 @@ section.panel:has(.ptiles)::after {
 .ptile2:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.35); }
 .ptile.big2 { width: 60px; height: 60px; border-radius: 16px; }
 
-/* step watermark numerals (ref: 5rem/900 faint, top-corner) */
-.steps { counter-reset: stepnum; }
-.step { position: relative; overflow: hidden; counter-increment: stepnum; }
-.step::before {
-  content: counter(stepnum, decimal-leading-zero);
-  position: absolute; top: -8px; inset-inline-end: 4px;
-  font-size: 4.5rem; font-weight: 900; line-height: 1;
-  color: rgba(255,255,255,.05); pointer-events: none; z-index: 0;
-}
+/* ===== v19: responsive any-device layout + About mockup + compact apology ===== */
+.pill-mini { display: inline-block; font-size: .75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; background: rgba(125,216,255,.12); color: #7dd8ff; border: 1px solid rgba(125,216,255,.25); margin-bottom: 10px; }
+.about-txt > h2 { margin-top: 0; }
+.about-mock { display: flex; justify-content: center; margin-top: 14px; }
+.mock-card { width: 100%; max-width: 300px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 16px; }
+.mock-row { display: flex; justify-content: space-between; font-size: .85rem; margin-bottom: 10px; }
+.mock-pct { color: #7dd8ff; font-weight: 700; }
+.mock-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.1); overflow: hidden; margin-bottom: 12px; }
+.mock-bar span { display: block; height: 100%; width: 85%; border-radius: 99px; background: linear-gradient(90deg, #38bdf8, #a78bfa); }
+.mock-btns { display: flex; gap: 10px; justify-content: flex-end; font-size: .8rem; }
+.mock-cancel { padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,.2); opacity: .8; }
+.mock-dl { padding: 6px 14px; border-radius: 8px; background: linear-gradient(135deg, #38bdf8, #a78bfa); color: #0d1233; font-weight: 700; }
+.plat-sub { margin: -4px 0 12px; opacity: .75; font-size: .92rem; }
+.feat .cell.mini { padding: 16px 18px; }
+.feat .cell.mini p { font-size: .85rem; }
+footer .advice { font-size: .8rem; opacity: .75; }
 
-/* compact apology note + smaller footer advice (user: خلي بس دي والنصيحة بس صغرهم) */
-.panel.mini { padding: 14px 18px; }
-.panel.mini .mini-t { font-weight: 700; font-size: .95rem; margin: 0 0 4px; }
-.panel.mini .mini-b { font-size: .82rem; opacity: .75; margin: 0; line-height: 1.6; }
-footer .advice { font-size: .78rem; opacity: .7; }
+/* tablet */
+@media (min-width: 700px) {
+  .steps { grid-template-columns: repeat(3, 1fr); }
+}
+/* desktop: use the screen width coherently */
+@media (min-width: 900px) {
+  .card { max-width: 1080px; padding: 34px 36px 26px; }
+  section.panel { padding: 36px 32px; }
+  #go-panel { max-width: 760px; margin-inline: auto; }
+  .about { display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: center; }
+  .about-mock { margin-top: 0; }
+  .feat { gap: 18px; }
+  .feat .cell { padding: 28px 24px; }
+  .feat .cell.mini { padding: 18px 22px; }
+  details summary { font-size: 1.08rem; }
+}
+@media (min-width: 700px) and (max-width: 899px) {
+  .card { max-width: 740px; }
+}
