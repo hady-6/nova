@@ -129,7 +129,12 @@ const t = (k) => (I18N[lang] && I18N[lang][k]) || I18N.ar[k] || k;
 // theme: dark (default) / light, remembered on this device
 (() => {
   const root = document.documentElement;
-  try { if (localStorage.getItem('nova-theme') === 'light') root.classList.add('light'); } catch (_) {}
+  let saved = null;
+  try { saved = localStorage.getItem('nova-theme'); } catch (_) {}
+  // default follows the visitor's own device/system theme; one tap switches directly
+  if (saved === 'light' || (saved === null && window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches)) {
+    root.classList.add('light');
+  }
   const btn = $('theme-toggle');
   if (btn) btn.addEventListener('click', () => {
     root.classList.toggle('light');
