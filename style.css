@@ -327,7 +327,6 @@ html.light .stars, html.light .stars2 { opacity: .14; }
 .ptile.fb { background: #1877f2; }
 .ptile.x { background: #0b0d17; border: 1px solid var(--line); }
 .ptile.tt { background: #010101; border: 1px solid var(--line); }
-.ptile.soon-tile { opacity: .55; }
 .soon-tag { font-size: 10.5px; font-weight: 700; color: var(--ink-2); align-self: center; margin-inline-start: 2px; }
 .ptile.vk { background: #0077ff; font-size: 9px; letter-spacing: .02em; }
 .ptile.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
@@ -356,3 +355,11 @@ html.light .lang-menu { background: rgba(255, 255, 255, .96); box-shadow: 0 14px
 .lang-menu button[aria-selected="true"] { color: var(--cyan); font-weight: 700; }
 .lang-menu button[aria-selected="true"]::after { content: '✓'; font-size: 12px; }
 html.light .lang-menu button[aria-selected="true"] { color: #5b4bd6; }
+
+/* platform icons are links to the official sites */
+.plink { display: inline-flex; border-radius: 7px; transition: transform .15s ease, filter .15s ease; }
+.plink:hover { transform: translateY(-1px); filter: brightness(1.12); }
+.plink:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
+.ptile.soon-tile { opacity: 1; }
+/* icon row reads LTR so Pinterest sits at the visual left in every language */
+.picons { direction: ltr; }
