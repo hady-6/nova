@@ -327,6 +327,7 @@ html.light .stars, html.light .stars2 { opacity: .14; }
 /* coming-soon platform tiles next to Pinterest */
 .ptile.fb { background: #1877f2; }
 .ptile.x { background: #0b0d17; border: 1px solid var(--line); }
+.ptile.tw { background: #e8f5fd; border: 1px solid var(--line); }
 .ptile.tt { background: #010101; border: 1px solid var(--line); }
 .soon-tag { font-size: 10.5px; font-weight: 700; color: var(--ink-2); align-self: center; margin-inline-start: 2px; }
 .ptile.vk { background: #0077ff; font-size: 9px; letter-spacing: .02em; }
