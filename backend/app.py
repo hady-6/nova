@@ -8,6 +8,10 @@ import subprocess, tempfile, os, re, urllib.request, urllib.parse, json, socket,
 app = FastAPI(title="NOVA API")
 ORIGINS = [o.strip() for o in os.environ.get("NOVA_ORIGINS", "https://hady-6.github.io").split(",") if o.strip()]
 TRIAL_KEY = os.environ.get("NOVA_TRIAL_KEY", "").strip()
+# NOVA_PUBLIC=1: free public site. Opens only the rate-limited, allowlisted API paths; HTML pages and owner stats stay protected by their own keys.
+PUBLIC = os.environ.get("NOVA_PUBLIC", "").strip() == "1"
+# Download proxy + convert stay behind the site password even in public mode unless explicitly enabled (cost/terms decision).
+PUBLIC_PROXY = os.environ.get("NOVA_PUBLIC_PROXY", "").strip() == "1"
 
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -52,9 +56,12 @@ class TrialGateMiddleware(BaseHTTPMiddleware):
     """When NOVA_TRIAL_KEY is set, everything except the login form requires a session cookie.
     The password only ever travels in a POST body - never in URLs, query strings, or logs."""
     async def dispatch(self, request, call_next):
+        p_ = request.url.path
         if request.url.path == "/api/health":
             return await call_next(request)
-        if not TRIAL_KEY:
+        if PUBLIC and (p_ in ("/api/comments", "/api/react") or (PUBLIC_PROXY and p_ in ("/api/download", "/api/convert"))):
+            return await call_next(request)
+        if not TRIAL_KEY and not PUBLIC:
             # Fail closed: without NOVA_TRIAL_KEY the app must never serve ungated.
             if "text/html" in request.headers.get("accept", ""):
                 return HTMLResponse(SETUP_HTML, status_code=503)
@@ -64,7 +71,7 @@ class TrialGateMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
         # Counter API: public paths are open (free/no-login public app); owner stats
         # authenticate separately via X-Owner-Key inside the handlers.
-        if p in ("/api/visit", "/api/stats/public", "/api/stats/owner", "/api/stats/backup", "/api/extract", "/api/rating"):
+        if p in ("/api/visit", "/api/stats/public", "/api/stats/owner", "/api/stats/backup", "/api/extract", "/api/rating", "/api/comments", "/api/react"):
             return await call_next(request)
         if _valid_session(request.cookies.get("nova_s", "")):
             return await call_next(request)
@@ -116,10 +123,13 @@ def _checked_url(url, max_hops=5):
     for _ in range(max_hops):
         if not re.match(r"https://", cur) or not _host_allowed(cur) or not _public_host(cur):
             raise HTTPException(400, "url not allowed")
-        req = urllib.request.Request(cur, headers=UA, method="HEAD")
+        # GET with Range 0-0 instead of HEAD: Pinterest's CDN answers 403 to HEAD with a browser UA but serves ranged GETs.
+        req = urllib.request.Request(cur, headers={**UA, "Range": "bytes=0-0"})
         try:
             with _opener.open(req, timeout=15) as r:
-                return cur, r.headers.get("Content-Length")
+                cr = r.headers.get("Content-Range", "")
+                total = cr.split("/")[-1] if "/" in cr and cr.split("/")[-1].isdigit() else r.headers.get("Content-Length")
+                return cur, total
         except urllib.error.HTTPError as e:
             loc = e.headers.get("Location")
             if e.code in (301, 302, 303, 307, 308) and loc:
@@ -472,7 +482,7 @@ def convert(request: Request, url: str = Query(..., min_length=8, max_length=400
             subprocess.run(["ffmpeg", "-v", "error", "-i", src, "-vn", "-c:a", "libmp3lame", "-q:a", "4", out, "-y"], check=True, timeout=120)
             return FileResponse(out, media_type="audio/mpeg", filename="nova.mp3")
         out = os.path.join(work, "out.gif")
-        subprocess.run(["ffmpeg", "-v", "error", "-i", src, "-vf", "fps=10,scale=480:-1:flags=lanczos", out, "-y"], check=True, timeout=120)
+        subprocess.run(["ffmpeg", "-v", "error", "-i", src, "-t", "8", "-vf", "fps=8,scale=360:-1:flags=lanczos", out, "-y"], check=True, timeout=120)
         return FileResponse(out, media_type="image/gif", filename="nova.gif")
     except Exception as e:
         raise HTTPException(502, f"conversion failed: {e}")
@@ -570,5 +580,58 @@ async def api_stats_backup(request: Request):
         }
     finally:
         con.close()
+
+
+
+# ===================== COMMENTS + REACTIONS (real storage, starts empty) =====================
+import sqlite3 as _sq3
+_SOCIAL_DB = os.environ.get("NOVA_SOCIAL_DB", os.path.join(os.path.dirname(os.path.abspath(__file__)), "nova_social.db"))
+_SOCIAL_LOCK = _threading.Lock()
+
+def _sdb():
+    c = _sq3.connect(_SOCIAL_DB)
+    c.execute("CREATE TABLE IF NOT EXISTS comments(id INTEGER PRIMARY KEY, ts INTEGER, name TEXT, text TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS reactions(voter TEXT PRIMARY KEY, val INTEGER)")
+    return c
+
+def _voter(request):
+    return _hmac.new((TRIAL_KEY or "nova").encode(), _client_ip(request).encode(), _hashlib.sha256).hexdigest()[:16]
+
+@app.get("/api/comments")
+def list_comments():
+    with _SOCIAL_LOCK, _sdb() as c:
+        rows = c.execute("SELECT ts,name,text FROM comments ORDER BY id DESC LIMIT 50").fetchall()
+        up = c.execute("SELECT count(*) FROM reactions WHERE val=1").fetchone()[0]
+        down = c.execute("SELECT count(*) FROM reactions WHERE val=-1").fetchone()[0]
+    return {"comments": [{"ts": r[0], "name": r[1], "text": r[2]} for r in rows], "likes": up, "dislikes": down}
+
+@app.post("/api/comments")
+async def add_comment(request: Request):
+    rate_limit(request, "comment", limit=5, window=60)
+    try:
+        b = await request.json()
+    except Exception:
+        raise HTTPException(400, "bad json")
+    name = str(b.get("name") or "").strip()[:40] or "زائر"
+    text = str(b.get("text") or "").strip()[:500]
+    if not text:
+        raise HTTPException(400, "empty comment")
+    with _SOCIAL_LOCK, _sdb() as c:
+        c.execute("INSERT INTO comments(ts,name,text) VALUES(?,?,?)", (int(time.time()), name, text))
+    return {"ok": True}
+
+@app.post("/api/react")
+async def react(request: Request):
+    rate_limit(request, "react", limit=10, window=60)
+    try:
+        b = await request.json()
+        v = int(b.get("value"))
+    except Exception:
+        raise HTTPException(400, "bad request")
+    if v not in (1, -1):
+        raise HTTPException(400, "bad value")
+    with _SOCIAL_LOCK, _sdb() as c:
+        c.execute("INSERT OR REPLACE INTO reactions(voter,val) VALUES(?,?)", (_voter(request), v))
+    return list_comments()
 
 app.mount("/", StaticFiles(directory="static", html=True), name="site")
