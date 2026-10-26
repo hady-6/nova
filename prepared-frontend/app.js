@@ -254,6 +254,7 @@ function applyLang() {
   if (window.__syncLangUI) window.__syncLangUI();
   if (!NOVA_BACKEND && LS.get('nova-rating')) $('rate-note').textContent = t('rate_saved');
   document.title = 'N O V A — ' + t('h1');
+  if (window.novaSocialPaint) window.novaSocialPaint();
 }
 
 const LANGS = ['ar', 'en', 'fr', 'es', 'ru', 'zh'];
@@ -539,20 +540,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* تقييم عام + تعليقات + إعجاب/عدم إعجاب - بتشتغل بس لما NOVA_BACKEND يتضبط (غير كده الصفحة زي ما هي) */
 const SOCIAL_T = {
-  ar: { rate_pub: 'تقييم الزوار', rate_none: 'لسه محدش قيّم', rate_sent: 'شكرًا! تقييمك اتحفظ على السيرفر', h: 'التعليقات', name: 'اسمك (اختياري)', ph: 'اكتب تعليقك', send: 'إرسال', none: 'لا توجد تعليقات بعد', fail: 'حصل خطأ، جرّب تاني', privacy: 'التعليقات والتقييمات والإعجابات بتتحفظ على السيرفر وتظهر للجميع. بنحفظ بصمة مُشفّرة لعنوان IP عشان صوت واحد لكل زائر، وبنعدّ الزيارات بمعرّف عشوائي محفوظ في متصفحك. روابط التحميل اللي بتلصقها بتوصل للسيرفر عشان يجيب الفيديو.' },
-  en: { rate_pub: 'Visitor rating', rate_none: 'No ratings yet', rate_sent: 'Thanks! Your rating was saved on the server', h: 'Comments', name: 'Your name (optional)', ph: 'Write a comment', send: 'Send', none: 'No comments yet', fail: 'Something went wrong, try again', privacy: 'Comments, ratings and likes are stored on the server and visible to everyone. We store a hashed form of your IP address to allow one vote per visitor, and count visits with a random id kept in your browser. Links you paste are sent to the server to fetch the video.' },
+  ar: {"avg": "تقييم الزوار: {a} من 5 - عدد المقيّمين {n}", "none": "لسه محدش قيّم", "h": "التعليقات", "name": "اسمك (اختياري)", "ph": "اكتب تعليقك", "send": "إرسال", "nc": "لا توجد تعليقات بعد", "fail": "حصل خطأ، جرّب تاني", "privacy": "التعليقات والتقييمات والإعجابات بتتحفظ على السيرفر وتظهر للجميع. بنحفظ بصمة مُشفّرة لعنوان IP عشان صوت واحد لكل زائر، وبنعدّ الزيارات بمعرّف عشوائي محفوظ في متصفحك. روابط التحميل اللي بتلصقها بتوصل للسيرفر عشان يجيب الفيديو."},
+  en: {"avg": "Visitor rating: {a} out of 5 - {n} ratings", "none": "No ratings yet", "h": "Comments", "name": "Your name (optional)", "ph": "Write a comment", "send": "Send", "nc": "No comments yet", "fail": "Something went wrong, try again", "privacy": "Comments, ratings and likes are stored on the server and visible to everyone. We store a hashed form of your IP address to allow one vote per visitor, and count visits with a random id kept in your browser. Links you paste are sent to the server to fetch the video."},
+  fr: {"avg": "Note des visiteurs : {a} sur 5 - {n} notes", "none": "Aucune note pour l'instant", "h": "Commentaires", "name": "Votre nom (facultatif)", "ph": "Écrire un commentaire", "send": "Envoyer", "nc": "Aucun commentaire", "fail": "Une erreur s'est produite, réessayez", "privacy": "Les commentaires, notes et réactions sont enregistrés sur le serveur et visibles par tous. Nous conservons une empreinte chiffrée de votre adresse IP pour un seul vote par visiteur, et comptons les visites avec un identifiant aléatoire stocké dans votre navigateur. Les liens collés sont envoyés au serveur pour récupérer la vidéo."},
+  es: {"avg": "Valoración de visitantes: {a} de 5 - {n} valoraciones", "none": "Aún no hay valoraciones", "h": "Comentarios", "name": "Tu nombre (opcional)", "ph": "Escribe un comentario", "send": "Enviar", "nc": "Aún no hay comentarios", "fail": "Algo salió mal, inténtalo de nuevo", "privacy": "Los comentarios, valoraciones y reacciones se guardan en el servidor y son visibles para todos. Guardamos una huella cifrada de tu IP para un solo voto por visitante, y contamos visitas con un identificador aleatorio guardado en tu navegador. Los enlaces que pegas se envían al servidor para obtener el vídeo."},
+  ru: {"avg": "Оценка посетителей: {a} из 5 - оценок: {n}", "none": "Оценок пока нет", "h": "Комментарии", "name": "Ваше имя (необязательно)", "ph": "Напишите комментарий", "send": "Отправить", "nc": "Комментариев пока нет", "fail": "Произошла ошибка, попробуйте ещё раз", "privacy": "Комментарии, оценки и реакции хранятся на сервере и видны всем. Мы храним хеш вашего IP-адреса, чтобы один посетитель мог голосовать один раз, и считаем визиты по случайному идентификатору в вашем браузере. Вставленные ссылки отправляются на сервер для получения видео."},
+  zh: {"avg": "访客评分：{a} / 5 - 共 {n} 人评分", "none": "暂无评分", "h": "评论", "name": "您的名字（可选）", "ph": "写下评论", "send": "发送", "nc": "暂无评论", "fail": "出错了，请重试", "privacy": "评论、评分和点赞保存在服务器上，所有人可见。我们保存您 IP 地址的哈希值以限制每位访客一票，并用保存在浏览器中的随机编号统计访问。您粘贴的链接会发送到服务器以获取视频。"},
 };
 function st(k) { const l = (typeof lang !== 'undefined' && SOCIAL_T[lang]) ? lang : 'en'; return SOCIAL_T[l][k]; }
 function initSocial() {
   if (!NOVA_BACKEND) return;
   const SITE = '__nova_site__';
   const note = $('rate-note');
-  const showAvg = (d) => { if (d && d.count) note.textContent = `${st('rate_pub')}: ${d.avg} / 5 (${d.count})`; else note.textContent = st('rate_none'); };
+  const star = note.nextElementSibling; if (star && star.querySelector('a[href*="github.com"]')) star.hidden = true;
+  note.removeAttribute('data-i18n');
+  let lastRating = null;
+  const showAvg = (d) => { lastRating = d; if (d && d.count) note.textContent = st('avg').replace('{a}', Number(d.avg).toFixed(1)).replace('{n}', String(d.count)); else note.textContent = st('rate_none'); };
   fetch(NOVA_BACKEND + '/api/rating?url=' + SITE).then((r) => r.json()).then(showAvg).catch(() => {});
   $('rate-stars').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
     fetch(NOVA_BACKEND + '/api/rating', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: SITE, stars: Number(b.dataset.star) }) })
-      .then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { showAvg(d); note.title = st('rate_sent'); }).catch(() => { note.textContent = st('fail'); });
+      .then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { showAvg(d);  }).catch(() => { note.textContent = st('fail'); });
   });
   const sec = document.createElement('section');
   sec.className = 'panel'; sec.id = 'social-panel';
@@ -564,13 +572,13 @@ function initSocial() {
     '<p class="rate-note" id="c-priv"></p>';
   $('rate-panel').after(sec);
   const paint = () => {
-    $('c-h').textContent = st('h'); $('c-name').placeholder = st('name'); $('c-text').placeholder = st('ph'); $('c-send').textContent = st('send'); $('c-priv').textContent = st('privacy');
+    $('c-h').textContent = st('h'); $('c-name').placeholder = st('name'); $('c-text').placeholder = st('ph'); $('c-send').textContent = st('send'); $('c-priv').textContent = st('privacy'); showAvg(lastRating);
   };
-  paint();
+  paint(); window.novaSocialPaint = paint;
   const load = (d) => {
     $('c-ups').textContent = d.likes; $('c-downs').textContent = d.dislikes;
     const box = $('c-list'); box.innerHTML = '';
-    if (!d.comments.length) { const p = document.createElement('p'); p.className = 'rate-note'; p.textContent = st('none'); box.appendChild(p); }
+    if (!d.comments.length) { const p = document.createElement('p'); p.className = 'rate-note'; p.textContent = st('nc'); box.appendChild(p); }
     d.comments.forEach((c) => { const p = document.createElement('p'); p.className = 'rate-note'; const b = document.createElement('b'); b.textContent = c.name + ': '; p.appendChild(b); p.appendChild(document.createTextNode(c.text)); box.appendChild(p); });
   };
   const refresh = () => fetch(NOVA_BACKEND + '/api/comments').then((r) => r.json()).then(load).catch(() => {});
