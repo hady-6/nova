@@ -323,6 +323,11 @@ html.light body {
   background-attachment: fixed;
 }
 html.light .stars, html.light .stars2 { opacity: .14; }
+html.light .panel.low h2 { color: #1c2247; }
+html.light .panel.low.about h2 { background: linear-gradient(135deg, #1c2247 30%, #7c5cff 100%); -webkit-background-clip: text; background-clip: text; }
+html.light .about .pill-mini { color: #5b4bd6; background: rgba(99,102,241,.12); }
+html.light .faq-sec details { background: rgba(255,255,255,.72); border-color: rgba(24,30,78,.14); }
+html.light .faq-sec details[open] { border-color: rgba(124,92,255,.55); }
 
 /* coming-soon platform tiles next to Pinterest */
 .ptile.fb { background: #1877f2; }
