@@ -676,3 +676,6 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
 #social-panel input { width: 100%; box-sizing: border-box; margin-top: 8px; }
 #c-list { margin: 6px 0 8px; max-height: 260px; overflow: auto; }
 #c-list .rate-note { text-align: start; }
+#social-panel ::placeholder { color: var(--muted, #8a93b8); opacity: .9; }
+#social-panel textarea, #social-panel input { direction: ltr; text-align: start; }
+html[dir="rtl"] #social-panel textarea, html[dir="rtl"] #social-panel input { direction: rtl; }
