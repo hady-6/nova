@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: nova-api
+    plan: free
+    runtime: docker
+    healthCheckPath: /api/health
