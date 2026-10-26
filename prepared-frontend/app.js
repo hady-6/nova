@@ -4,6 +4,8 @@
 /* اختياري: لما يتنشر الـ backend العام، اكتب رابطه هنا (مثال 'https://nova.onrender.com').
    فاضي = الصفحة تشتغل زي ما هي بالظبط من غير أي نداءات خارجية. */
 const NOVA_BACKEND = '';
+/* true فقط لما يتفعّل مسار التنزيل المباشر في السيرفر (NOVA_PUBLIC_PROXY=1) - غير كده الرابط بيفتح الفيديو في صفحة جديدة زي الأول. */
+const NOVA_PROXY = false;
 
 /* تخزين آمن: لو المتصفح رافض localStorage (وضع خاص/قيود) الموقع يفضل شغال */
 const LS = {
@@ -20,7 +22,8 @@ async function backendExtract(url) {
   return {
     title: String(d.title || t('pin_default')).slice(0, 120),
     variants: media.map((m) => ({
-      label: m.quality || 'MP4',
+      label: 'MP4',
+      size: m.size || 0,
       url: m.url,
       width: m.width || 0,
       height: m.height || 0,
@@ -36,10 +39,10 @@ function renderResult(res) {
   res.variants.forEach((v, i) => {
     const a = document.createElement('a');
     a.className = 'quality' + (i === 0 ? ' primary' : '');
-    a.href = v.url;
+    a.href = (NOVA_BACKEND && NOVA_PROXY) ? NOVA_BACKEND + '/api/download?name=nova&url=' + encodeURIComponent(v.url) : v.url;
     a.target = '_blank';
     a.rel = 'noopener';
-    a.textContent = v.width ? `${v.label} · ${v.width}×${v.height} · ${(v.ext || 'mp4').toUpperCase()}` : `${v.label} · ${(v.ext || 'mp4').toUpperCase()}`;
+    a.textContent = (!v.width && v.size) ? `${v.label} · ${(v.size / 1048576).toFixed(1)} MB` : v.width ? `${v.label} · ${v.width}×${v.height} · ${(v.ext || 'mp4').toUpperCase()}` : `${v.label} · ${(v.ext || 'mp4').toUpperCase()}`;
     box.appendChild(a);
   });
   $('pin-result').hidden = false;
@@ -249,7 +252,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
   document.querySelectorAll('[data-i18n-title]').forEach((el) => { el.title = t(el.dataset.i18nTitle); el.setAttribute('aria-label', el.title); });
   if (window.__syncLangUI) window.__syncLangUI();
-  if (LS.get('nova-rating')) $('rate-note').textContent = t('rate_saved');
+  if (!NOVA_BACKEND && LS.get('nova-rating')) $('rate-note').textContent = t('rate_saved');
   document.title = 'N O V A — ' + t('h1');
 }
 
@@ -470,7 +473,7 @@ $('rate-stars').addEventListener('click', (e) => {
   if (!b) return;
   LS.set('nova-rating', b.dataset.star);
   paintStars(Number(b.dataset.star));
-  $('rate-note').textContent = t('rate_saved');
+  if (!NOVA_BACKEND) $('rate-note').textContent = t('rate_saved');
 });
 paintStars(Number(LS.get('nova-rating')) || 0);
 
@@ -533,3 +536,51 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   requestAnimationFrame(frame);
 });
+
+/* تقييم عام + تعليقات + إعجاب/عدم إعجاب - بتشتغل بس لما NOVA_BACKEND يتضبط (غير كده الصفحة زي ما هي) */
+const SOCIAL_T = {
+  ar: { rate_pub: 'تقييم الزوار', rate_none: 'لسه محدش قيّم', rate_sent: 'شكرًا! تقييمك اتحفظ على السيرفر', h: 'التعليقات', name: 'اسمك (اختياري)', ph: 'اكتب تعليقك', send: 'إرسال', none: 'لا توجد تعليقات بعد', fail: 'حصل خطأ، جرّب تاني', privacy: 'التعليقات والتقييمات والإعجابات بتتحفظ على السيرفر وتظهر للجميع. بنحفظ بصمة مُشفّرة لعنوان IP عشان صوت واحد لكل زائر، وبنعدّ الزيارات بمعرّف عشوائي محفوظ في متصفحك. روابط التحميل اللي بتلصقها بتوصل للسيرفر عشان يجيب الفيديو.' },
+  en: { rate_pub: 'Visitor rating', rate_none: 'No ratings yet', rate_sent: 'Thanks! Your rating was saved on the server', h: 'Comments', name: 'Your name (optional)', ph: 'Write a comment', send: 'Send', none: 'No comments yet', fail: 'Something went wrong, try again', privacy: 'Comments, ratings and likes are stored on the server and visible to everyone. We store a hashed form of your IP address to allow one vote per visitor, and count visits with a random id kept in your browser. Links you paste are sent to the server to fetch the video.' },
+};
+function st(k) { const l = (typeof lang !== 'undefined' && SOCIAL_T[lang]) ? lang : 'en'; return SOCIAL_T[l][k]; }
+function initSocial() {
+  if (!NOVA_BACKEND) return;
+  const SITE = '__nova_site__';
+  const note = $('rate-note');
+  const showAvg = (d) => { if (d && d.count) note.textContent = `${st('rate_pub')}: ${d.avg} / 5 (${d.count})`; else note.textContent = st('rate_none'); };
+  fetch(NOVA_BACKEND + '/api/rating?url=' + SITE).then((r) => r.json()).then(showAvg).catch(() => {});
+  $('rate-stars').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    fetch(NOVA_BACKEND + '/api/rating', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: SITE, stars: Number(b.dataset.star) }) })
+      .then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { showAvg(d); note.title = st('rate_sent'); }).catch(() => { note.textContent = st('fail'); });
+  });
+  const sec = document.createElement('section');
+  sec.className = 'panel'; sec.id = 'social-panel';
+  sec.innerHTML = '<h2><span id="c-h"></span></h2>' +
+    '<div class="stars-input"><button type="button" id="c-up" aria-label="like">👍 <span id="c-ups">0</span></button><button type="button" id="c-down" aria-label="dislike">👎 <span id="c-downs">0</span></button></div>' +
+    '<div id="c-list"></div>' +
+    '<input id="c-name" maxlength="40" autocomplete="off"><textarea id="c-text" maxlength="500" rows="3"></textarea>' +
+    '<button type="button" id="c-send" class="quality primary"></button>' +
+    '<p class="rate-note" id="c-priv"></p>';
+  $('rate-panel').after(sec);
+  const paint = () => {
+    $('c-h').textContent = st('h'); $('c-name').placeholder = st('name'); $('c-text').placeholder = st('ph'); $('c-send').textContent = st('send'); $('c-priv').textContent = st('privacy');
+  };
+  paint();
+  const load = (d) => {
+    $('c-ups').textContent = d.likes; $('c-downs').textContent = d.dislikes;
+    const box = $('c-list'); box.innerHTML = '';
+    if (!d.comments.length) { const p = document.createElement('p'); p.className = 'rate-note'; p.textContent = st('none'); box.appendChild(p); }
+    d.comments.forEach((c) => { const p = document.createElement('p'); p.className = 'rate-note'; const b = document.createElement('b'); b.textContent = c.name + ': '; p.appendChild(b); p.appendChild(document.createTextNode(c.text)); box.appendChild(p); });
+  };
+  const refresh = () => fetch(NOVA_BACKEND + '/api/comments').then((r) => r.json()).then(load).catch(() => {});
+  refresh();
+  [['c-up', 1], ['c-down', -1]].forEach(([id, v]) => $(id).addEventListener('click', () =>
+    fetch(NOVA_BACKEND + '/api/react', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ value: v }) }).then((r) => r.json()).then(load).catch(() => {})));
+  $('c-send').addEventListener('click', () => {
+    const text = $('c-text').value.trim(); if (!text) return;
+    fetch(NOVA_BACKEND + '/api/comments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: $('c-name').value, text }) })
+      .then((r) => (r.ok ? ($('c-text').value = '', refresh()) : Promise.reject())).catch(() => { $('c-priv').textContent = st('fail'); });
+  });
+}
+document.addEventListener('DOMContentLoaded', initSocial);
