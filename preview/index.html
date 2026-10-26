@@ -244,9 +244,13 @@
 </main>
 <script>
 fetch('../prepared-frontend/app.js?v=44').then(function(r){return r.text()}).then(function(t){
+var AR={"feat2_b": "في هذه النسخة التجريبية يمر رابطك والفيديو عبر خادم الاختبار الخاص بنوفا. لا حسابات، لكن العداد والتعليقات والتقييمات تُحفظ مؤقتًا هناك وقد تضيع.", "about_p2": "في هذه النسخة التجريبية يُجلب الفيديو ويمر عبر خادم الاختبار الخاص بنوفا، ويُحفظ عدّاد الزوار والتعليقات والتقييمات مؤقتًا هناك.", "fmt_b2": "تحويل الصيغ - مثل استخراج MP3 - غير متاح في هذه النسخة التجريبية.", "faq1_q": "هل يعمل رابط pin.it المختصر؟", "faq1_a": "جرّب لصق الرابط المختصر مباشرة (جُرّب رابط واحد بنجاح). إن لم يعمل افتحه في المتصفح وانسخ الرابط الطويل. بعض البينات لا تتاح للتنزيل إن لم يشارك Pinterest بيانات الفيديو.", "feat5_b": "يدعم نوفا روابط بنترست العامة وأي رابط فيديو مباشر ينتهي بـ MP4 أو WebM أو MOV. روابط pin.it المختصرة قد تعمل في هذه النسخة التجريبية؛ إن لم تعمل افتحها في المتصفح وانسخ الرابط الطويل."},EN={"feat2_b": "In this test version your link and the video pass through NOVA's test server. No accounts, but the counter, comments and ratings are stored there temporarily and may be lost.", "about_p2": "In this test version the video is fetched and passed through NOVA's test server, and the visitor counter, comments and ratings are stored there temporarily.", "fmt_b2": "Format conversion - like extracting MP3 - is not available in this test version.", "faq1_q": "Does a short pin.it link work?", "faq1_a": "Try pasting the short link directly (one link was tested successfully). If it does not work, open it in your browser and copy the full link. Some pins cannot be downloaded if Pinterest does not share their video data.", "feat5_b": "NOVA supports public Pinterest links and any direct video link ending in MP4, WebM or MOV. Short pin.it links may work in this test version; if not, open them in the browser and copy the full link."};
+ t=t.replace(/(\b(feat2_b|about_p2|fmt_b2|faq1_q|faq1_a|feat5_b)): '((?:[^'\\]|\\.)*)'/g,function(m,k,k2,v){var ar=/[\u0600-\u06FF]/.test(v);return k+": '"+(ar?AR:EN)[k2].replace(/'/g,"\\'")+"'"});
+ t=t.replace(/"(feat2_b|about_p2|fmt_b2|faq1_q|faq1_a|feat5_b)": "((?:[^"\\\\]|\\\\.)*)"/g,function(m,k){return JSON.stringify(k)+": "+JSON.stringify(EN[k])});
  t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-gflgfdkh.b4a.run';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = true;");
  var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
  document.dispatchEvent(new Event('DOMContentLoaded'));
+ var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();
 });
 </script>
 </body>
