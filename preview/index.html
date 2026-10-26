@@ -246,6 +246,7 @@
 fetch('../prepared-frontend/app.js?v=44').then(function(r){return r.text()}).then(function(t){
  t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-gflgfdkh.b4a.run';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = true;");
  var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
+ document.dispatchEvent(new Event('DOMContentLoaded'));
 });
 </script>
 </body>
