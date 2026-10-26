@@ -75,7 +75,7 @@ const I18N = {
     err_short_t: 'اللينك المختصر ده', err_short_b: 'لينكات pin.it محتاجة تتفتح الأول: افتح اللينك في المتصفح، هيتحوّل للينك طويل، انسخه من شريط العنوان والصقه هنا.',
     err_bad_t: 'اللينك مش واضح', err_bad_b: 'الصق لينك بين من بنترست (زي pinterest.com/pin/…) أو لينك فيديو مباشر ينتهي بـ mp4.',
     err_notfound_t: 'مش لاقي البين ده', err_notfound_b: 'اتأكد إن اللينك صح وإن البين عام مش سري.',
-    err_novideo_t: 'ده مش فيديو', err_novideo_b: 'البين ده صورة مش فيديو، فمفيش حاجة تتحمّل منه كفيديو.',
+    err_novideo_t: 'مقدرناش نلاقي الفيديو', err_novideo_b: 'البين ده إما صورة مش فيديو، أو بينترست مش بيدينا بيانات الفيديو بتاعته. لو متأكد إن فيه فيديو، جرّب لينك تاني أو حاول تاني بعدين.',
     err_network_t: 'مشكلة في الاتصال', err_network_b: 'النت قطع أو بنترست ماردش. جرّب تاني.',
   },
 
@@ -152,7 +152,7 @@ const I18N = {
     err_short_t: 'That short link', err_short_b: 'pin.it links need to be opened first: open the link in your browser, it turns into the long link - copy it from the address bar and paste it here.',
     err_bad_t: 'Unclear link', err_bad_b: 'Paste a Pinterest pin link (like pinterest.com/pin/…) or a direct video link ending in mp4.',
     err_notfound_t: 'Pin not found', err_notfound_b: 'Check the link is correct and the pin is public, not secret.',
-    err_novideo_t: "That's not a video", err_novideo_b: 'This pin is an image, not a video - there is nothing to download as video.',
+    err_novideo_t: "We couldn't find the video", err_novideo_b: "This pin is either an image, not a video, or Pinterest isn't sharing its video data with us. If you're sure it has a video, try a different link or try again later.",
     err_network_t: 'Connection problem', err_network_b: 'The network dropped or Pinterest did not respond. Try again.',
   },
 
