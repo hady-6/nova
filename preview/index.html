@@ -249,7 +249,7 @@ fetch(NB+'/api/health',{signal:ac.signal}).then(function(r){return r.ok&&r.json(
 fetch('../prepared-frontend/app.js?v=44').then(function(r){return r.text()}).then(function(t){
  if(!alive){
   var bn=document.querySelector('body > div[dir=rtl]');
-  if(bn){bn.style.background='#3a0d0d';bn.style.color='#ffb4b4';bn.textContent='انتهت فترة التجربة المؤقتة: السيرفر التجريبي مقفول، فالعداد والتعليقات والتقييمات غير شغالة. الموقع الأساسي لسه شغال زي ما هو.';}
+  if(bn){bn.style.background='#3a0d0d';bn.style.color='#ffb4b4';bn.textContent='تعذّر الاتصال بسيرفر التجربة؛ التحميل عبره والعداد والتعليقات غير متاحين حاليًا. الصفحة هنا بدون السيرفر ووظائفها محدودة. التجربة كان مقرر تنتهي حوالي 18:09. الموقع الأساسي لم يتغيّر.';}
   var e0=document.createElement('script');e0.textContent=t;document.body.appendChild(e0);
   document.dispatchEvent(new Event('DOMContentLoaded'));
   return;
