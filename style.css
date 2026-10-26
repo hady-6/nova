@@ -328,8 +328,11 @@ html.light .panel.low.about h2 { background: linear-gradient(135deg, #1c2247 30%
 html.light .about .pill-mini { color: #5b4bd6; background: rgba(99,102,241,.12); }
 html.light .faq-sec details { background: rgba(255,255,255,.72); border-color: rgba(24,30,78,.14); }
 html.light .faq-sec details[open] { border-color: rgba(124,92,255,.55); }
+/* FAQ typography: reference larger question/answer, generous spacing (both themes) */
+.faq-sec summary { font-size: 1.18rem; font-weight: 700; padding: 24px 26px; }
+.faq-sec details p { font-size: 1.04rem; line-height: 2.0; padding: 0 26px 26px; }
 /* light FAQ: reference surface + typography + filled violet chevron */
-html.light .faq-sec summary { color: #232a52; font-size: 1.18rem; font-weight: 700; padding: 24px 26px; }
+html.light .faq-sec summary { color: #232a52; }
 html.light .faq-sec details[open] summary { color: #5b4bd6; }
 html.light .faq-sec summary::after {
   width: 34px; height: 34px; border-color: rgba(124,92,255,.45);
@@ -339,7 +342,7 @@ html.light .faq-sec details[open] summary::after {
   border-color: #6366f1; transform: rotate(180deg);
   background: #6366f1 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>') center/16px no-repeat;
 }
-html.light .faq-sec details p { font-size: 1.04rem; line-height: 2.0; padding: 0 26px 26px; color: #3a4468; }
+html.light .faq-sec details p { color: #3a4468; }
 
 /* coming-soon platform tiles next to Pinterest */
 .ptile.fb { background: #1877f2; }
