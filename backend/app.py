@@ -12,6 +12,8 @@ TRIAL_KEY = os.environ.get("NOVA_TRIAL_KEY", "").strip()
 PUBLIC = os.environ.get("NOVA_PUBLIC", "").strip() == "1"
 # Download proxy + convert stay behind the site password even in public mode unless explicitly enabled (cost/terms decision).
 PUBLIC_PROXY = os.environ.get("NOVA_PUBLIC_PROXY", "").strip() == "1"
+# Convert (ffmpeg MP3/GIF) is separate and off by default: heavy on CPU/RAM. Needs NOVA_PUBLIC_CONVERT=1 on top of NOVA_PUBLIC.
+PUBLIC_CONVERT = os.environ.get("NOVA_PUBLIC_CONVERT", "").strip() == "1"
 
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -59,7 +61,7 @@ class TrialGateMiddleware(BaseHTTPMiddleware):
         p_ = request.url.path
         if request.url.path == "/api/health":
             return await call_next(request)
-        if PUBLIC and (p_ in ("/api/comments", "/api/react") or (PUBLIC_PROXY and p_ in ("/api/download", "/api/convert"))):
+        if PUBLIC and (p_ in ("/api/comments", "/api/react") or (PUBLIC_PROXY and p_ == "/api/download") or (PUBLIC_CONVERT and p_ == "/api/convert")):
             return await call_next(request)
         if not TRIAL_KEY and not PUBLIC:
             # Fail closed: without NOVA_TRIAL_KEY the app must never serve ungated.
