@@ -258,7 +258,7 @@ fetch('nova-app.js?v=1').then(function(r){return r.text()}).then(function(t){
  t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-api.alaziziya7.workers.dev';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = false;");
  var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
  document.dispatchEvent(new Event('DOMContentLoaded'));
- var rs=document.createElement('script');rs.src='reviews.js?v=2';rs.onload=function(){var o=window.novaSocialPaint;window.novaSocialPaint=function(){if(o)o();if(window.novaReviewsPaint)window.novaReviewsPaint()}};document.body.appendChild(rs);var as=document.createElement('script');as.src='audio.js?v=1';document.body.appendChild(as);
+ var rs=document.createElement('script');rs.src='reviews.js?v=2';rs.onload=function(){var o=window.novaSocialPaint;window.novaSocialPaint=function(){if(o)o();if(window.novaReviewsPaint)window.novaReviewsPaint()}};document.body.appendChild(rs);var as=document.createElement('script');as.src='audio.js?v=2';document.body.appendChild(as);
  var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();var c2=document.querySelector('[data-i18n=chip_nolimits]');if(c2&&c2.parentNode)c2.parentNode.remove();
 });
 });
