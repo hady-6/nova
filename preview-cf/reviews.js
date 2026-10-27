@@ -112,6 +112,7 @@
     c.title = t('dlt'); c.textContent = '⬇ ' + t('dl').replace('{n}', dlTotal);
   }
   function loadDl() { fetch(API + '/api/stats/downloads').then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (d) { dlTotal = d.total; paintDl(); }).catch(function () {}); }
+  window.novaDlRefresh = function () { loadDl(); };
   function countDl(e) {
     var a = e.target.closest && e.target.closest('#variants a.quality'); if (!a) return;
     fetch(API + '/api/dl', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cid: cid }), keepalive: true })
