@@ -32,6 +32,33 @@ async function backendExtract(url) {
   };
 }
 
+let savingResult = false;
+async function saveResult(url, a, title) {
+  if (savingResult) return;
+  savingResult = true;
+  const old = a.textContent;
+  a.textContent = t('going');
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('fetch');
+    const b = await r.blob();
+    if (!b.size) throw new Error('empty');
+    const o = URL.createObjectURL(b);
+    const dl = document.createElement('a');
+    dl.href = o;
+    dl.download = (String(title || 'nova-video').replace(/[\\/:*?"<>|]+/g, ' ').trim().slice(0, 60) || 'nova-video') + '.mp4';
+    document.body.appendChild(dl);
+    dl.click();
+    dl.remove();
+    setTimeout(() => URL.revokeObjectURL(o), 30000);
+  } catch {
+    window.open(url, '_blank', 'noopener');
+  } finally {
+    a.textContent = old;
+    savingResult = false;
+  }
+}
+
 function renderResult(res) {
   $('pin-title').textContent = res.title;
   const box = $('variants');
@@ -39,9 +66,10 @@ function renderResult(res) {
   res.variants.forEach((v, i) => {
     const a = document.createElement('a');
     a.className = 'quality' + (i === 0 ? ' primary' : '');
-    a.href = (NOVA_BACKEND && NOVA_PROXY) ? NOVA_BACKEND + '/api/download?name=nova&url=' + encodeURIComponent(v.url) : v.url;
+    a.href = v.url;
     a.target = '_blank';
     a.rel = 'noopener';
+    a.addEventListener('click', (e) => { e.preventDefault(); saveResult(v.url, a, res.title); });
     a.textContent = (!v.width && v.size) ? `${v.label} · ${(v.size / 1048576).toFixed(1)} MB` : v.width ? `${v.label} · ${v.width}×${v.height} · ${(v.ext || 'mp4').toUpperCase()}` : `${v.label} · ${(v.ext || 'mp4').toUpperCase()}`;
     box.appendChild(a);
   });
@@ -362,14 +390,14 @@ async function fetchPin(id) {
   return { id, title, variants };
 }
 
-async function goBackend(s) {
+async function goBackend(s, failKind) {
   const btn = $('go');
   btn.disabled = true;
   btn.querySelector('span').textContent = t('going');
   try {
     renderResult(await backendExtract(s));
   } catch {
-    showError('short');
+    showError(failKind || 'short');
   } finally {
     btn.disabled = false;
     btn.querySelector('span').textContent = t('go');
@@ -389,6 +417,10 @@ async function go() {
   if (/pin\.it\//i.test(s)) {
     if (NOVA_BACKEND) return goBackend(s);
     return showError('short');
+  }
+  if (/^https?:\/\/((www\.|m\.)?tiktok\.com|(vt|vm)\.tiktok\.com)\//i.test(s)) {
+    if (NOVA_BACKEND) return goBackend(s, 'network');
+    return showError('bad');
   }
   if (isDirectVideo(s)) {
     $('direct-result').hidden = false;
