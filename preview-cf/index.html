@@ -21,6 +21,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%237c5cff'/%3E%3Cellipse cx='16' cy='16' rx='20' ry='6' fill='none' stroke='%237dd8ff' stroke-width='2' transform='rotate(-18 16 16)'/%3E%3C/svg%3E">
 <script>try{var st=localStorage.getItem('nova-theme');if(st==='light'||(st===null&&matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light')}catch(e){}</script>
   <link rel="stylesheet" href="../prepared-frontend/style.css?v=44">
+<style>html.light #social-panel textarea,html.light #social-panel input{background:#fff;color:#1a2040;border:1px solid rgba(26,32,64,.35)}html.light #social-panel textarea::placeholder,html.light #social-panel input::placeholder{color:#5a6280;opacity:1}html:not(.light) #social-panel textarea::placeholder,html:not(.light) #social-panel input::placeholder{color:#aab4e0;opacity:1}</style>
 </head>
 <body><div dir="rtl" style="position:sticky;top:0;z-index:99;background:#2a1f00;color:#ffd479;font:600 13px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">نسخة تجريبية لـ NOVA على Cloudflare المجاني (قيد الاختبار) · الفيديو يُفتح في تبويب جديد لتحفظه من المتصفح (مش تنزيل بضغطة واحدة) · للخطة المجانية حدود استخدام ولا يوجد تشغيل مضمون · الموقع الأساسي لسه زي ما هو</div>
 <div class="stars" aria-hidden="true"></div>
@@ -83,7 +84,7 @@
     <div id="msg" role="status" aria-live="polite"></div>
     <div class="chips">
       <span class="chip"><i class="dot dc">✦</i> <span data-i18n="chip_free">مجاني</span></span>
-      <span class="chip"><i class="dot dv">∞</i> <span data-i18n="chip_nolimits">بلا حدود</span></span>
+      
       <span class="chip"><i class="dot dc">🌐</i> <span data-i18n="chip_online">عبر الإنترنت</span></span>
       <span class="chip"><i class="dot dy">⚡</i> <span data-i18n="chip_fast">سريع</span></span>
       <span class="chip"><i class="dot dg">✓</i> <span data-i18n="chip_private">خاص</span></span>
@@ -260,7 +261,7 @@ var AR={"feat2_b": "في هذه النسخة التجريبية يمر رابط�
  t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-api.alaziziya7.workers.dev';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = false;");
  var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
  document.dispatchEvent(new Event('DOMContentLoaded'));
- var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();
+ var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();var c2=document.querySelector('[data-i18n=chip_nolimits]');if(c2&&c2.parentNode)c2.parentNode.remove();
 });
 });
 </script>
