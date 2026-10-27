@@ -57,7 +57,7 @@
       var data = await ff.readFile('nova-audio.mp3');
       var url = URL.createObjectURL(new Blob([data.buffer], { type: 'audio/mpeg' }));
       var a = document.createElement('a'); a.href = url; a.download = (f.name.replace(/\.[^.]+$/, '') || 'nova-audio') + '.mp3';
-      document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
+      document.body.appendChild(a); a.click(); a.remove(); try { var c = localStorage.getItem('nova_cid') || ''; fetch('https://nova-api.alaziziya7.workers.dev/api/dl', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cid: c }), keepalive: true }).then(function () { if (window.novaDlRefresh) window.novaDlRefresh(); }).catch(function () {}); } catch (e) {} setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
       try { await ff.deleteFile(inp); await ff.deleteFile('nova-audio.mp3'); } catch (e) {}
       pr.value = 100; status = 'ready';
     } catch (e) { console.error('audio extract failed', e); status = 'err'; }
