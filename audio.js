@@ -2,8 +2,8 @@
 (function () {
   var SRC = (document.currentScript && document.currentScript.src) || location.href;
   var T = {
-    ar: { h: 'استخرج الصوت من ملف فيديو', b: 'اختر فيديو موجودًا على جهازك لتحويل الصوت إلى MP3.', choose: 'اختيار ملف فيديو', go: 'استخراج MP3', loading: 'تحميل أداة التحويل لأول مرة…', working: 'جارٍ استخراج الصوت محليًا…', ready: 'تم تجهيز MP3 للتنزيل.', err: 'تعذّر تحويل الملف. جرّب MP4 أو WebM أصغر.', note: 'الملف يبقى على جهازك ولا يُرفع إلى نوفا. أداة التحويل تُحمّل من jsDelivr عند أول استخدام؛ اختر ملفًا أقل من 100MB.' },
-    en: { h: 'Extract audio from a video', b: 'Choose a video already on your device to convert its audio track to MP3.', choose: 'Choose a video file', go: 'Extract MP3', loading: 'Loading the converter for the first time…', working: 'Extracting audio on this device…', ready: 'MP3 is ready to download.', err: 'Could not convert this file. Try a smaller MP4 or WebM.', note: 'Your file stays on your device and is not uploaded to NOVA. The converter loads from jsDelivr on first use; choose a file under 100MB.' }
+    ar: { h: 'استخرج الصوت من ملف فيديو', b: 'للملفات الموجودة على جهازك فقط (مش للرابط اللي فوق): اختر فيديو لتحويل صوته إلى MP3.', choose: 'اختيار ملف فيديو', go: 'استخراج MP3', loading: 'تحميل أداة التحويل لأول مرة…', working: 'جارٍ استخراج الصوت محليًا…', ready: 'تم تجهيز MP3 للتنزيل.', err: 'تعذّر تحويل الملف. جرّب MP4 أو WebM أصغر.', note: 'الملف يبقى على جهازك ولا يُرفع إلى نوفا. أداة التحويل تُحمّل من jsDelivr عند أول استخدام؛ اختر ملفًا أقل من 100MB.' },
+    en: { h: 'Extract audio from a video', b: 'For files already on your device only (not for the link above): choose a video to convert its audio to MP3.', choose: 'Choose a video file', go: 'Extract MP3', loading: 'Loading the converter for the first time…', working: 'Extracting audio on this device…', ready: 'MP3 is ready to download.', err: 'Could not convert this file. Try a smaller MP4 or WebM.', note: 'Your file stays on your device and is not uploaded to NOVA. The converter loads from jsDelivr on first use; choose a file under 100MB.' }
   };
   var lang = function () { var l = ''; try { l = localStorage.getItem('nova-lang') || ''; } catch (e) {} l = (l || document.documentElement.lang || 'ar').slice(0, 2); return l === 'ar' ? 'ar' : 'en'; };
   var t = function (k) { return T[lang()][k]; };
@@ -11,20 +11,20 @@
   var status = 'note', ff = null;
   function css() {
     var s = document.createElement('style');
-    s.textContent = '#audio-tools input[type=file]{width:100%;box-sizing:border-box;font-size:16px;margin:8px 0;direction:ltr}#audio-tools progress{display:block;width:100%;height:10px;margin:10px 0}#audio-tools #audio-extract{min-height:48px;padding:0 18px;cursor:pointer}#audio-tools .audio-status{min-height:1.7em;margin:8px 0 0;font-size:13px}';
+    s.textContent = '#audio-tools{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12)}#audio-tools h3{margin:0 0 6px;font-size:16px}#audio-tools .ab{margin:0 0 4px;font-size:13px;opacity:.8}#audio-tools label{font-size:13px}#audio-tools input[type=file]{width:100%;box-sizing:border-box;font-size:16px;margin:8px 0;direction:ltr}#audio-tools progress{display:block;width:100%;height:10px;margin:10px 0}#audio-tools #audio-extract{min-height:48px;padding:0 18px;cursor:pointer}#audio-tools .audio-status{min-height:1.7em;margin:8px 0 0;font-size:13px}';
     document.head.appendChild(s);
   }
   function paint() {
     var p = $('audio-tools'); if (!p) return;
-    p.querySelector('h2').textContent = t('h'); p.querySelector('p.ab').textContent = t('b');
+    p.querySelector('h3').textContent = t('h'); p.querySelector('p.ab').textContent = t('b');
     p.querySelector('label').textContent = t('choose'); $('audio-extract').textContent = t('go');
     if (status) $('audio-status').textContent = t(status);
   }
   function build() {
     if ($('audio-tools')) return;
-    var sec = document.createElement('section'); sec.className = 'panel'; sec.id = 'audio-tools';
-    sec.innerHTML = '<h2></h2><p class="ab"></p><label for="audio-file"></label><input id="audio-file" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,.mp4,.webm,.mov,.mkv,.m4v"><button id="audio-extract" class="quality" type="button" disabled></button><progress id="audio-progress" max="100" value="0" hidden></progress><p id="audio-status" class="audio-status" role="status" aria-live="polite"></p>';
-    var rv = $('reviews-panel'); if (rv && rv.parentNode) rv.parentNode.insertBefore(sec, rv); else document.body.appendChild(sec);
+    var sec = document.createElement('section'); sec.id = 'audio-tools';
+    sec.innerHTML = '<h3></h3><p class="ab"></p><label for="audio-file"></label><input id="audio-file" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,.mp4,.webm,.mov,.mkv,.m4v"><button id="audio-extract" class="quality" type="button" disabled></button><progress id="audio-progress" max="100" value="0" hidden></progress><p id="audio-status" class="audio-status" role="status" aria-live="polite"></p>';
+    var gp = $('go-panel'), ch = gp && gp.querySelector('.chips'); if (gp) gp.insertBefore(sec, ch || null); else { var rv = $('reviews-panel'); if (rv && rv.parentNode) rv.parentNode.insertBefore(sec, rv); else document.body.appendChild(sec); }
     css(); paint();
     $('audio-file').addEventListener('change', function () {
       var f = this.files && this.files[0]; $('audio-extract').disabled = !f;
