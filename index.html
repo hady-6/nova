@@ -256,7 +256,7 @@ var as=document.createElement('script');as.src='audio.js?v=4';document.body.appe
 var NB='https://nova-api.alaziziya7.workers.dev';
 var ac=new AbortController();setTimeout(function(){ac.abort()},6000);
 fetch(NB+'/api/health',{signal:ac.signal}).then(function(r){return r.ok&&r.json()}).then(function(j){return !!(j&&j.ok)}).catch(function(){return false}).then(function(alive){
-fetch('nova-app.js?v=2').then(function(r){return r.text()}).then(function(t){
+fetch('nova-app.js?v=3').then(function(r){return r.text()}).then(function(t){
  if(!alive){
   var bn=document.createElement('div');bn.dir='rtl';bn.style.cssText='background:#3a0d0d;color:#ffb4b4;font:600 13px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center';bn.textContent='تعذّر الاتصال بخادم نوفا على Cloudflare؛ استخراج الفيديو والعداد والتعليقات غير متاحين حاليًا.';document.body.insertBefore(bn,document.body.firstChild);
   var e0=document.createElement('script');e0.textContent=t;document.body.appendChild(e0);
