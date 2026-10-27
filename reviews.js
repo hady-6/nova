@@ -43,7 +43,7 @@
       '<input id="rv-name" maxlength="40" autocomplete="off" enterkeyhint="next"><textarea id="rv-text" maxlength="500" rows="3" enterkeyhint="enter"></textarea>' +
       '<div class="rv-msg" id="rv-msg" role="status" aria-live="polite"></div>' +
       '<button type="submit" class="quality primary rv-send" id="rv-send"></button></form>' +
-      '<div id="rv-list"></div><p class="rate-note" id="rv-priv"></p><div class="rv-modbar" id="rv-modbar"></div>';
+      '<div id="rv-list"></div><div class="rv-modbar" id="rv-modbar"></div>';
     var anchor = $('rate-panel') || document.querySelector('main .panel');
     if (anchor) anchor.after(sec); else document.querySelector('main').appendChild(sec);
     var pick = $('rv-pick');
@@ -60,7 +60,7 @@
   function paintPick() { var bs = $('rv-pick').children; for (var i = 0; i < bs.length; i++) bs[i].classList.toggle('on', i < picked); }
   function mine() { return data && data.reviews.filter(function (r) { return r.mine; })[0]; }
   function paint() {
-    $('rv-h').textContent = t('h'); $('rv-name').placeholder = t('name'); $('rv-text').placeholder = t('ph'); $('rv-priv').textContent = t('priv');
+    $('rv-h').textContent = t('h'); $('rv-name').placeholder = t('name'); $('rv-text').placeholder = t('ph');
     $('rv-send').textContent = mine() ? t('upd') : t('send');
     paintMod(); paintDl();
     if (msgKey) msg(msgKey, msgErr);
@@ -85,6 +85,7 @@
 
   function paintMod() {
     var bar = $('rv-modbar'); if (!bar) return; bar.innerHTML = '';
+    if (!modKey) return;
     if (modKey) { var a = document.createElement('a'); a.textContent = t('modoff'); a.onclick = function () { modKey = null; try { sessionStorage.removeItem('nova_mod'); } catch (e) {} msg('', false); paint(); }; bar.appendChild(a); return; }
     if (!modOpen) { var l = document.createElement('a'); l.textContent = t('mod'); l.onclick = function () { modOpen = true; paintMod(); var i = $('rv-modpw'); if (i) i.focus(); }; bar.appendChild(l); return; }
     var f = document.createElement('form'); f.innerHTML = '<input id="rv-modpw" type="password" autocomplete="current-password" placeholder="' + esc(t('modpw')) + '"><button type="submit" class="quality">' + esc(t('modon')) + '</button>';
