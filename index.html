@@ -103,10 +103,6 @@
     <h2><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="url(#planet)" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h13"/></svg> <span data-i18n="choose_quality">اختار الجودة</span></h2>
     <p id="pin-title"></p>
     <div id="variants" class="stack"></div>
-    <div class="note">
-      <strong data-i18n="howto_save_t">إزاي تحفظه</strong>
-      <span data-i18n="howto_save_b">دوس على الجودة، الفيديو هيفتح لوحده في صفحة جديدة. شغّله، ومن ⋮ اختار «تنزيل» وهيتحفظ على موبايلك. بعض المواقع بتمنع التحميل بضغطة واحدة.</span>
-    </div>
   </section>
 
   <section id="direct-result" class="panel" hidden>
@@ -177,11 +173,6 @@
         <span class="bubble"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 2.2l7.5 3v5.3c0 4.8-3.2 9.2-7.5 10.9-4.3-1.7-7.5-6.1-7.5-10.9V5.2l7.5-3z"/><rect x="9" y="10.5" width="6" height="4.6" rx="1.2" fill="#0d0a1f"/><path d="M10.2 10.5V9.2a1.8 1.8 0 0 1 3.6 0v1.3h-1.3V9.2a.5.5 0 0 0-1 0v1.3h-1.3z" fill="#0d0a1f"/></svg></span>
         <strong data-i18n="feat6_t">أكثر أمانًا وأسهل استخدامًا</strong>
         <p data-i18n="feat6_b">تم تصميم نوفا لجعل عملية التنزيل بسيطة وخاصة وخالية من التعقيد. لا حاجة إلى إنشاء حساب، ولا خطوات غير ضرورية تبطئك.</p>
-      </div>
-      <div class="cell mini cr">
-        <span class="bubble"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
-        <strong data-i18n="feat4_t">اعتذار عن الإعلانات</strong>
-        <p data-i18n="feat4_b">هنضيف إعلانات صغيرة وهادئة قريبًا، وهي اللي هتساعدنا نكمّل نوفا ونطوّره. شكرًا لتفهّمكم.</p>
       </div>
 
     </div>
@@ -256,7 +247,7 @@ var as=document.createElement('script');as.src='audio.js?v=4';document.body.appe
 var NB='https://nova-api.alaziziya7.workers.dev';
 var ac=new AbortController();setTimeout(function(){ac.abort()},6000);
 fetch(NB+'/api/health',{signal:ac.signal}).then(function(r){return r.ok&&r.json()}).then(function(j){return !!(j&&j.ok)}).catch(function(){return false}).then(function(alive){
-fetch('nova-app.js?v=3').then(function(r){return r.text()}).then(function(t){
+fetch('nova-app.js?v=4').then(function(r){return r.text()}).then(function(t){
  if(!alive){
   var bn=document.createElement('div');bn.dir='rtl';bn.style.cssText='background:#3a0d0d;color:#ffb4b4;font:600 13px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center';bn.textContent='تعذّر الاتصال بخادم نوفا على Cloudflare؛ استخراج الفيديو والعداد والتعليقات غير متاحين حاليًا.';document.body.insertBefore(bn,document.body.firstChild);
   var e0=document.createElement('script');e0.textContent=t;document.body.appendChild(e0);
@@ -266,7 +257,7 @@ fetch('nova-app.js?v=3').then(function(r){return r.text()}).then(function(t){
  t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-api.alaziziya7.workers.dev';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = false;");
  var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
  document.dispatchEvent(new Event('DOMContentLoaded'));
- var rs=document.createElement('script');rs.src='reviews.js?v=2';rs.onload=function(){var o=window.novaSocialPaint;window.novaSocialPaint=function(){if(o)o();if(window.novaReviewsPaint)window.novaReviewsPaint()}};document.body.appendChild(rs);
+ var rs=document.createElement('script');rs.src='reviews.js?v=3';rs.onload=function(){var o=window.novaSocialPaint;window.novaSocialPaint=function(){if(o)o();if(window.novaReviewsPaint)window.novaReviewsPaint()}};document.body.appendChild(rs);
  var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();var c2=document.querySelector('[data-i18n=chip_nolimits]');if(c2&&c2.parentNode)c2.parentNode.remove();
 });
 });
