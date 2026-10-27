@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="../prepared-frontend/style.css?v=44">
 <style>html.light #social-panel textarea,html.light #social-panel input{background:#fff;color:#1a2040;border:1px solid rgba(26,32,64,.35)}html.light #social-panel textarea::placeholder,html.light #social-panel input::placeholder{color:#5a6280;opacity:1}html:not(.light) #social-panel textarea::placeholder,html:not(.light) #social-panel input::placeholder{color:#aab4e0;opacity:1}</style>
 </head>
-<body><div dir="rtl" style="position:sticky;top:0;z-index:99;background:#2a1f00;color:#ffd479;font:600 13px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">نسخة تجريبية لـ NOVA على Cloudflare المجاني (قيد الاختبار) · الفيديو يُفتح في تبويب جديد لتحفظه من المتصفح (مش تنزيل بضغطة واحدة) · للخطة المجانية حدود استخدام ولا يوجد تشغيل مضمون · الموقع الأساسي لسه زي ما هو</div>
+<body><div dir="rtl" style="position:static;background:#2a1f00;color:#ffd479;font:600 13px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center">نسخة تجريبية لـ NOVA على Cloudflare المجاني (قيد الاختبار) · الفيديو يُفتح في تبويب جديد لتحفظه من المتصفح (مش تنزيل بضغطة واحدة) · للخطة المجانية حدود استخدام ولا يوجد تشغيل مضمون · الموقع الأساسي لسه زي ما هو</div>
 <div class="stars" aria-hidden="true"></div>
 <div class="stars stars2" aria-hidden="true"></div>
 <main class="card">
@@ -261,6 +261,7 @@ var AR={"feat2_b": "في هذه النسخة التجريبية يمر رابط�
  t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-api.alaziziya7.workers.dev';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = false;");
  var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
  document.dispatchEvent(new Event('DOMContentLoaded'));
+ var rs=document.createElement('script');rs.src='reviews.js?v=1';rs.onload=function(){var o=window.novaSocialPaint;window.novaSocialPaint=function(){if(o)o();if(window.novaReviewsPaint)window.novaReviewsPaint()}};document.body.appendChild(rs);
  var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();var c2=document.querySelector('[data-i18n=chip_nolimits]');if(c2&&c2.parentNode)c2.parentNode.remove();
 });
 });
