@@ -7,8 +7,9 @@
 <meta name="description" content="نوفا: حمّل فيديوهاتك بسهولة - الصق الرابط واختار الجودة وحمّل. مجاني.">
 <meta name="keywords" content="تحميل فيديو, بنترست, pinterest video downloader, nova, نوفا, تحميل من بنترست">
 <meta name="robots" content="index,follow">
-<meta name="theme-color" content="#0d1233">
 <link rel="canonical" href="https://hady-6.github.io/nova/">
+<meta name="theme-color" content="#0d1233">
+
 <meta property="og:site_name" content="NOVA">
 <meta property="og:type" content="website">
 <meta property="og:title" content="N O V A — حمّل فيديوهاتك بسهولة">
@@ -19,7 +20,8 @@
 <meta name="twitter:description" content="الصق اللينك، اختار الجودة، وحمّل. مجاني.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%237c5cff'/%3E%3Cellipse cx='16' cy='16' rx='20' ry='6' fill='none' stroke='%237dd8ff' stroke-width='2' transform='rotate(-18 16 16)'/%3E%3C/svg%3E">
 <script>try{var st=localStorage.getItem('nova-theme');if(st==='light'||(st===null&&matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light')}catch(e){}</script>
-  <link rel="stylesheet" href="style.css?v=44">
+  <link rel="stylesheet" href="prepared-frontend/style.css?v=44">
+<style>html.light #social-panel textarea,html.light #social-panel input{background:#fff;color:#1a2040;border:1px solid rgba(26,32,64,.35)}html.light #social-panel textarea::placeholder,html.light #social-panel input::placeholder{color:#5a6280;opacity:1}html:not(.light) #social-panel textarea::placeholder,html:not(.light) #social-panel input::placeholder{color:#aab4e0;opacity:1}</style>
 </head>
 <body>
 <div class="stars" aria-hidden="true"></div>
@@ -82,7 +84,7 @@
     <div id="msg" role="status" aria-live="polite"></div>
     <div class="chips">
       <span class="chip"><i class="dot dc">✦</i> <span data-i18n="chip_free">مجاني</span></span>
-      <span class="chip"><i class="dot dv">∞</i> <span data-i18n="chip_nolimits">بلا حدود</span></span>
+      
       <span class="chip"><i class="dot dc">🌐</i> <span data-i18n="chip_online">عبر الإنترنت</span></span>
       <span class="chip"><i class="dot dy">⚡</i> <span data-i18n="chip_fast">سريع</span></span>
       <span class="chip"><i class="dot dg">✓</i> <span data-i18n="chip_private">خاص</span></span>
@@ -238,8 +240,30 @@
       <a href="#about" data-i18n="foot_about">عن نوفا</a>
       <a href="#faq" data-i18n="foot_faq">الأسئلة الشائعة</a>
     </div>
+    <p id="stats-line" class="stats-line" hidden></p>
   </footer>
 </main>
-<script src="app.js?v=44"></script>
+<script>
+var NB='https://nova-api.alaziziya7.workers.dev';
+var ac=new AbortController();setTimeout(function(){ac.abort()},6000);
+fetch(NB+'/api/health',{signal:ac.signal}).then(function(r){return r.ok&&r.json()}).then(function(j){return !!(j&&j.ok)}).catch(function(){return false}).then(function(alive){
+fetch('prepared-frontend/app.js?v=44').then(function(r){return r.text()}).then(function(t){
+ if(!alive){
+  var bn=document.createElement('div');bn.dir='rtl';bn.style.cssText='background:#3a0d0d;color:#ffb4b4;font:600 13px/1.5 system-ui,sans-serif;padding:8px 12px;text-align:center';bn.textContent='تعذّر الاتصال بخادم نوفا على Cloudflare؛ استخراج الفيديو والعداد والتعليقات غير متاحين حاليًا.';document.body.insertBefore(bn,document.body.firstChild);
+  var e0=document.createElement('script');e0.textContent=t;document.body.appendChild(e0);
+  document.dispatchEvent(new Event('DOMContentLoaded'));
+  return;
+ }
+var AR={"feat2_b": "يمر رابطك عبر خادم نوفا على Cloudflare لاستخراج الفيديو، أما الفيديو نفسه فيُفتح مباشرة من Pinterest في تبويب جديد لتحفظه من المتصفح. لا حسابات، والعداد والتعليقات والتقييمات تُحفظ في قاعدة بيانات Cloudflare D1، وللخطة المجانية حدود استخدام.", "about_p2": "يمر رابطك عبر خادم نوفا على Cloudflare لاستخراج الفيديو فقط، ويُحفظ عدّاد الزوار والتعليقات والتقييمات في قاعدة بيانات Cloudflare D1 المجانية، ولها حدود استخدام.", "fmt_b2": "تحويل الصيغ من الروابط غير متاح. يمكنك فقط استخراج MP3 من ملف فيديو تختاره على جهازك (لا يُرفع).", "faq1_q": "هل يعمل رابط pin.it المختصر؟", "faq1_a": "جرّب لصق الرابط المختصر مباشرة. اختُبرت ثلاثة روابط مختصرة بنجاح، من بينها رابط فيديو بصيغة HLS فقط. إن لم يعمل رابطك افتحه في المتصفح وانسخ الرابط الطويل. بعض البينات لا تتاح للتنزيل إن لم يشارك Pinterest بيانات الفيديو.", "feat5_b": "يدعم نوفا روابط بنترست العامة وأي رابط فيديو مباشر ينتهي بـ MP4 أو WebM أو MOV. روابط pin.it المختصرة تعمل؛ إن لم يعمل رابطك افتحه في المتصفح وانسخ الرابط الطويل."},EN={"feat2_b": "Your link passes through NOVA's Cloudflare server to find the video; the video itself opens directly from Pinterest in a new tab for you to save from the browser. No accounts. The counter, comments and ratings are stored in a Cloudflare D1 database, and the free plan has usage limits.", "about_p2": "Your link passes through NOVA's Cloudflare server only to find the video, and the visitor counter, comments and ratings are stored in a free Cloudflare D1 database, which has usage limits.", "fmt_b2": "Converting formats from links is not available. You can only extract MP3 from a video file you choose on your device (it is not uploaded).", "faq1_q": "Does a short pin.it link work?", "faq1_a": "Try pasting the short link directly. Three short links were tested successfully, including a pin with HLS-only video. If yours does not work, open it in your browser and copy the full link. Some pins cannot be downloaded if Pinterest does not share their video data.", "feat5_b": "NOVA supports public Pinterest links and any direct video link ending in MP4, WebM or MOV. Short pin.it links work; if yours does not, open it in the browser and copy the full link."};
+ t=t.replace(/(\b(feat2_b|about_p2|fmt_b2|faq1_q|faq1_a|feat5_b)): '((?:[^'\\]|\\.)*)'/g,function(m,k,k2,v){var ar=/[\u0600-\u06FF]/.test(v);return k+": '"+(ar?AR:EN)[k2].replace(/'/g,"\\'")+"'"});
+ t=t.replace(/"(feat2_b|about_p2|fmt_b2|faq1_q|faq1_a|feat5_b)": "((?:[^"\\\\]|\\\\.)*)"/g,function(m,k){return JSON.stringify(k)+": "+JSON.stringify(EN[k])});
+ t=t.replace("const NOVA_BACKEND = '';","const NOVA_BACKEND = 'https://nova-api.alaziziya7.workers.dev';").replace("const NOVA_PROXY = false;","const NOVA_PROXY = false;");
+ var e=document.createElement('script');e.textContent=t;document.body.appendChild(e);
+ document.dispatchEvent(new Event('DOMContentLoaded'));
+ var rs=document.createElement('script');rs.src='reviews.js?v=2';rs.onload=function(){var o=window.novaSocialPaint;window.novaSocialPaint=function(){if(o)o();if(window.novaReviewsPaint)window.novaReviewsPaint()}};document.body.appendChild(rs);var as=document.createElement('script');as.src='audio.js?v=1';document.body.appendChild(as);
+ var c=document.querySelector('[data-i18n=chip_private]');if(c&&c.parentNode)c.parentNode.remove();var c2=document.querySelector('[data-i18n=chip_nolimits]');if(c2&&c2.parentNode)c2.parentNode.remove();
+});
+});
+</script>
 </body>
 </html>
