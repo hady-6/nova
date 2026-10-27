@@ -2,8 +2,8 @@
 (function () {
   var API = 'https://nova-api.alaziziya7.workers.dev';
   var T = {
-    ar: { h: 'التقييمات والتعليقات', none: 'لسه محدش قيّم', cnt: '{n} تقييم', rate: 'تقييمك', name: 'اسمك (اختياري)', ph: 'اكتب رأيك (اختياري)', send: 'إرسال التقييم', upd: 'تحديث تقييمي', pick: 'اختر عدد النجوم أولًا', sending: 'جاري الإرسال...', ok: 'تم الإرسال', fail: 'تعذّر الإرسال، تأكد من الاتصال وحاول تاني', limit: 'محاولات كتير، استنى دقيقة وحاول تاني', mine: 'تقييمك', edited: 'معدّل', helpful: 'مفيد', own: 'لا يمكن الإعجاب بتقييمك', empty: 'لا توجد تقييمات بعد. كن أول من يقيّم.', priv: 'التقييمات والتعليقات والإعجابات محفوظة على الخادم وتظهر للجميع. بنستخدم معرّفًا عشوائيًا محفوظًا في متصفحك لتقييم واحد لكل زائر، وبنحفظ بصمة مُشفّرة لعنوان IP للحد من الإساءة.', loadfail: 'تعذّر تحميل التقييمات حاليًا' },
-    en: { h: 'Ratings & reviews', none: 'No ratings yet', cnt: '{n} ratings', rate: 'Your rating', name: 'Your name (optional)', ph: 'Write your review (optional)', send: 'Submit review', upd: 'Update my review', pick: 'Pick a star rating first', sending: 'Sending...', ok: 'Sent', fail: 'Could not send. Check your connection and try again', limit: 'Too many attempts, wait a minute and try again', mine: 'Your review', edited: 'edited', helpful: 'Helpful', own: 'You cannot like your own review', empty: 'No reviews yet. Be the first.', priv: 'Reviews, comments and likes are stored on the server and visible to everyone. A random id kept in your browser allows one review per visitor, and a hashed form of your IP address helps limit abuse.', loadfail: 'Could not load reviews right now' }
+    ar: { h: 'التقييمات والتعليقات', none: 'لسه محدش قيّم', cnt: '{n} تقييم', rate: 'تقييمك', name: 'اسمك (اختياري)', ph: 'اكتب رأيك (اختياري)', send: 'إرسال التقييم', upd: 'تحديث تقييمي', pick: 'اختر عدد النجوم أولًا', sending: 'جاري الإرسال...', ok: 'تم الإرسال', fail: 'تعذّر الإرسال، تأكد من الاتصال وحاول تاني', limit: 'محاولات كتير، استنى دقيقة وحاول تاني', mine: 'تقييمك', edited: 'معدّل', helpful: 'مفيد', own: 'لا يمكن الإعجاب بتقييمك', empty: 'لا توجد تقييمات بعد. كن أول من يقيّم.', priv: 'التقييمات والتعليقات والإعجابات محفوظة على الخادم وتظهر للجميع. بنستخدم معرّفًا عشوائيًا محفوظًا في متصفحك لتقييم واحد لكل زائر، وبنحفظ بصمة مُشفّرة لعنوان IP للحد من الإساءة.', loadfail: 'تعذّر تحميل التقييمات حاليًا', dl: '{n} ضغطة على زر التحميل', dlt: 'عدد مرات الضغط على زر التحميل، وليس تأكيدًا أن الملف اتحفظ على الجهاز', mod: 'مشرف', modpw: 'كلمة مرور المشرف', modon: 'دخول', modoff: 'خروج المشرف', modbad: 'كلمة المرور غير صحيحة', modoffl: 'المشرف غير مفعّل بعد', del: 'حذف', delq: 'حذف هذا التعليق نهائيًا؟', delfail: 'تعذّر الحذف' },
+    en: { h: 'Ratings & reviews', none: 'No ratings yet', cnt: '{n} ratings', rate: 'Your rating', name: 'Your name (optional)', ph: 'Write your review (optional)', send: 'Submit review', upd: 'Update my review', pick: 'Pick a star rating first', sending: 'Sending...', ok: 'Sent', fail: 'Could not send. Check your connection and try again', limit: 'Too many attempts, wait a minute and try again', mine: 'Your review', edited: 'edited', helpful: 'Helpful', own: 'You cannot like your own review', empty: 'No reviews yet. Be the first.', priv: 'Reviews, comments and likes are stored on the server and visible to everyone. A random id kept in your browser allows one review per visitor, and a hashed form of your IP address helps limit abuse.', loadfail: 'Could not load reviews right now', dl: '{n} download button clicks', dlt: 'Counts clicks on the download button, not confirmed saved files', mod: 'Moderator', modpw: 'Moderator password', modon: 'Sign in', modoff: 'Sign out moderator', modbad: 'Wrong password', modoffl: 'Moderator is not set up yet', del: 'Delete', delq: 'Delete this review permanently?', delfail: 'Could not delete' }
   };
   var css = '#reviews-panel .rv-sum{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;margin:6px 0 14px}' +
     '#reviews-panel .rv-big{font-size:44px;font-weight:700;line-height:1;text-align:center}#reviews-panel .rv-cnt{font-size:13px;opacity:.75;text-align:center}' +
@@ -20,6 +20,7 @@
     '#reviews-panel .rv-card{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--line,rgba(150,160,220,.25))}#reviews-panel .rv-av{flex:none;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#c94dd8);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}' +
     '#reviews-panel .rv-body{flex:1;min-width:0}#reviews-panel .rv-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}#reviews-panel .rv-name{font-weight:700}#reviews-panel .rv-date,#reviews-panel .rv-tag{font-size:12px;opacity:.7}' +
     '#reviews-panel .rv-txt{margin:4px 0 6px;white-space:pre-wrap;overflow-wrap:anywhere}#reviews-panel .rv-like{border:1px solid var(--line,rgba(150,160,220,.35));background:transparent;color:inherit;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;font:inherit;font-size:14px;touch-action:manipulation}#reviews-panel .rv-like.on{background:rgba(124,92,255,.25);border-color:rgba(124,92,255,.7)}#reviews-panel .rv-like[disabled]{opacity:.5;cursor:default}' +
+    '#reviews-panel .rv-del{margin-inline-start:8px;border:1px solid rgba(255,120,120,.6);background:transparent;color:#ff9a9a;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;font:inherit;font-size:14px}html.light #reviews-panel .rv-del{color:#b00020;border-color:#b00020}#reviews-panel .rv-modbar{margin-top:10px;text-align:center;font-size:13px}#reviews-panel .rv-modbar a{cursor:pointer;text-decoration:underline;opacity:.8}#reviews-panel .rv-modbar form{display:flex;gap:8px;align-items:center;margin-top:6px}#reviews-panel .rv-modbar input{margin-top:0}#reviews-panel .rv-modbar button{min-height:44px;padding:0 14px;cursor:pointer}#dl-chip{display:inline-flex}' +
     '#rate-panel,#social-panel{display:none!important}';
   var LSget = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
   var LSset = function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} };
@@ -28,6 +29,8 @@
   if (!cid || !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(cid)) { cid = uuid().toLowerCase(); LSset('nova_cid', cid); }
   var lang = function () { var l = (LSget('nova-lang') || document.documentElement.lang || 'ar').slice(0, 2); return T[l] ? l : (l === 'ar' ? 'ar' : 'en'); };
   var t = function (k) { return T[lang()][k]; };
+  var modKey = null; try { modKey = sessionStorage.getItem('nova_mod'); } catch (e) {}
+  var modOpen = false, dlTotal = null;
   var data = null, picked = 0, msgKey = '', msgErr = false, busy = false;
   var $ = function (id) { return document.getElementById(id); };
   var stars = function (n) { var s = ''; for (var i = 1; i <= 5; i++) s += '<span class="' + (i <= Math.round(n) ? '' : 'off') + '">★</span>'; return s; };
@@ -40,7 +43,7 @@
       '<input id="rv-name" maxlength="40" autocomplete="off" enterkeyhint="next"><textarea id="rv-text" maxlength="500" rows="3" enterkeyhint="enter"></textarea>' +
       '<div class="rv-msg" id="rv-msg" role="status" aria-live="polite"></div>' +
       '<button type="submit" class="quality primary rv-send" id="rv-send"></button></form>' +
-      '<div id="rv-list"></div><p class="rate-note" id="rv-priv"></p>';
+      '<div id="rv-list"></div><p class="rate-note" id="rv-priv"></p><div class="rv-modbar" id="rv-modbar"></div>';
     var anchor = $('rate-panel') || document.querySelector('main .panel');
     if (anchor) anchor.after(sec); else document.querySelector('main').appendChild(sec);
     var pick = $('rv-pick');
@@ -50,7 +53,7 @@
     send.addEventListener('mousedown', function (e) { e.preventDefault(); });
     $('rv-form').addEventListener('submit', function (e) { e.preventDefault(); submit(); });
     $('rv-name').value = LSget('nova_rv_name') || '';
-    $('rv-list').addEventListener('click', function (e) { var b = e.target.closest('.rv-like'); if (!b || b.disabled) return; like(+b.dataset.id, b); });
+    $('rv-list').addEventListener('click', function (e) { var d = e.target.closest('.rv-del'); if (d) { delReview(+d.dataset.id, d); return; } var b = e.target.closest('.rv-like'); if (!b || b.disabled) return; like(+b.dataset.id, b); });
     paint();
   }
   function msg(k, err, raw) { msgKey = k; msgErr = !!err; var m = $('rv-msg'); if (!m) return; m.textContent = raw || (k ? t(k) : ''); m.className = 'rv-msg' + (err ? ' err' : ''); }
@@ -59,6 +62,7 @@
   function paint() {
     $('rv-h').textContent = t('h'); $('rv-name').placeholder = t('name'); $('rv-text').placeholder = t('ph'); $('rv-priv').textContent = t('priv');
     $('rv-send').textContent = mine() ? t('upd') : t('send');
+    paintMod(); paintDl();
     if (msgKey) msg(msgKey, msgErr);
     var s = data && data.summary, sum = $('rv-sum');
     if (s && s.count) {
@@ -74,9 +78,44 @@
       c.innerHTML = '<div class="rv-av">' + esc((r.name || '?').trim().charAt(0).toUpperCase()) + '</div><div class="rv-body"><div class="rv-head"><span class="rv-name">' + esc(r.name) + '</span>' + (r.mine ? '<span class="rv-tag">' + esc(t('mine')) + '</span>' : '') + '</div>' +
         '<div class="rv-head"><span class="rv-st">' + stars(r.stars) + '</span><span class="rv-date">' + esc(ds) + (r.edited ? ' · ' + esc(t('edited')) : '') + '</span></div>' +
         (r.text ? '<div class="rv-txt">' + esc(r.text) + '</div>' : '') +
-        '<button type="button" class="rv-like' + (r.liked ? ' on' : '') + '" data-id="' + r.id + '"' + (r.mine ? ' disabled title="' + esc(t('own')) + '"' : '') + '>👍 ' + esc(t('helpful')) + ' · <span>' + r.likes + '</span></button></div>';
+        '<button type="button" class="rv-like' + (r.liked ? ' on' : '') + '" data-id="' + r.id + '"' + (r.mine ? ' disabled title="' + esc(t('own')) + '"' : '') + '>👍 ' + esc(t('helpful')) + ' · <span>' + r.likes + '</span></button>' + (modKey ? '<button type="button" class="rv-del" data-id="' + r.id + '">🗑 ' + esc(t('del')) + '</button>' : '') + '</div>';
       list.appendChild(c);
     });
+  }
+
+  function paintMod() {
+    var bar = $('rv-modbar'); if (!bar) return; bar.innerHTML = '';
+    if (modKey) { var a = document.createElement('a'); a.textContent = t('modoff'); a.onclick = function () { modKey = null; try { sessionStorage.removeItem('nova_mod'); } catch (e) {} msg('', false); paint(); }; bar.appendChild(a); return; }
+    if (!modOpen) { var l = document.createElement('a'); l.textContent = t('mod'); l.onclick = function () { modOpen = true; paintMod(); var i = $('rv-modpw'); if (i) i.focus(); }; bar.appendChild(l); return; }
+    var f = document.createElement('form'); f.innerHTML = '<input id="rv-modpw" type="password" autocomplete="current-password" placeholder="' + esc(t('modpw')) + '"><button type="submit" class="quality">' + esc(t('modon')) + '</button>';
+    f.onsubmit = function (e) { e.preventDefault(); var k = $('rv-modpw').value; if (!k) return; modCheck(k); };
+    bar.appendChild(f);
+  }
+  function modCheck(k) {
+    fetch(API + '/api/mod/check', { method: 'POST', headers: { 'x-mod-key': k } }).then(function (r) {
+      if (r.status === 503) { msg('modoffl', true); return; } if (r.status === 429) { msg('limit', true); return; } if (!r.ok) { msg('modbad', true); return; }
+      modKey = k; try { sessionStorage.setItem('nova_mod', k); } catch (e) {} modOpen = false; msg('', false); paint();
+    }).catch(function () { msg('fail', true); });
+  }
+  function delReview(id, btn) {
+    if (!modKey || !window.confirm(t('delq'))) return; btn.disabled = true;
+    fetch(API + '/api/reviews/delete', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-mod-key': modKey }, body: JSON.stringify({ id: id }) }).then(function (r) {
+      if (r.status === 403) { modKey = null; try { sessionStorage.removeItem('nova_mod'); } catch (e) {} paint(); msg('modbad', true); return; }
+      if (!r.ok && r.status !== 404) throw new Error('http'); load();
+    }).catch(function () { btn.disabled = false; msg('delfail', true); });
+  }
+  function paintDl() {
+    var chips = document.querySelector('.chips'); if (!chips) return;
+    var c = $('dl-chip');
+    if (dlTotal === null) { if (c) c.remove(); return; }
+    if (!c) { c = document.createElement('span'); c.className = 'chip'; c.id = 'dl-chip'; chips.appendChild(c); }
+    c.title = t('dlt'); c.textContent = '⬇ ' + t('dl').replace('{n}', dlTotal);
+  }
+  function loadDl() { fetch(API + '/api/stats/downloads').then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (d) { dlTotal = d.total; paintDl(); }).catch(function () {}); }
+  function countDl(e) {
+    var a = e.target.closest && e.target.closest('#variants a.quality'); if (!a) return;
+    fetch(API + '/api/dl', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cid: cid }), keepalive: true })
+      .then(function (r) { return r.ok ? r.json() : null; }).then(function (d) { if (d && typeof d.total === 'number') { dlTotal = d.total; paintDl(); } }).catch(function () {});
   }
   function load() {
     fetch(API + '/api/reviews?cid=' + cid).then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (d) {
@@ -104,7 +143,8 @@
   }
   function init() {
     if (document.getElementById('reviews-panel')) return;
-    build(); load();
+    build(); load(); loadDl();
+    document.addEventListener('click', countDl, true); document.addEventListener('auxclick', countDl, true);
     window.novaReviewsPaint = paint;
     new MutationObserver(function () { paint(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] });
   }
