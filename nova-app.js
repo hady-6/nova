@@ -57,7 +57,7 @@ const I18N = {
     h1: 'حمّل فيديوهاتك بسهولة',
     sub: 'الصق الرابط واختار الجودة وحمّل',
     url_label: 'لينك الفيديو', ph: "https://…", paste_title: 'لصق',
-    go: 'هات الفيديو', going: 'بجيب الفيديو…',
+    go: 'تحميل', going: 'بجيب الفيديو…',
     foot_how: 'كيفية التنزيل', foot_why: 'ليه نوفا؟', foot_about: 'عن نوفا', foot_faq: 'الأسئلة الشائعة', chip_free: 'مجاني', chip_nolimits: 'بلا حدود', chip_online: 'عبر الإنترنت', chip_fast: 'سريع', chip_private: 'خاص', chip_oss: 'GitHub',
     choose_quality: 'اختار الجودة',
     howto_save_t: 'إزاي تحفظه',
