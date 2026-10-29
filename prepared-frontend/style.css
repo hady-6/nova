@@ -679,3 +679,16 @@ footer .advice { max-width: 640px; line-height: 1.9; font-size: .9rem; margin: 0
 #social-panel ::placeholder { color: var(--muted, #8a93b8); opacity: .9; }
 #social-panel textarea, #social-panel input { direction: ltr; text-align: start; }
 html[dir="rtl"] #social-panel textarea, html[dir="rtl"] #social-panel input { direction: rtl; }
+
+/* plain video background: no shade, no pan, no stars */
+.bgvid{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;pointer-events:none}
+.bgshade{display:none}
+.stars,.stars2{display:none!important}
+@media (prefers-reduced-motion: reduce){.bgvid{display:none}}
+
+/* readable foreground surfaces over the plain video (video itself untouched) */
+header, .panel.low { border-radius: 22px; padding-block: 14px; padding-inline: 14px; background: rgba(10, 14, 34, .66); }
+html.light header, html.light .panel.low { background: rgba(255, 255, 255, .84); }
+html.light .nav .lang, html.light .theme-btn { background: rgba(255,255,255,.88); color: #1c2247; }
+html.light .panel#go-panel, html.light .panel#rate-panel { background-color: rgba(255,255,255,.84); }
+header { max-width: 760px; margin-inline: auto; }
